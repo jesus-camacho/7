@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply bg-base-950 text-slate-100 antialiased overflow-hidden;
+    @apply bg-paper-50 text-ink-900 antialiased overflow-hidden;
   }
 }
 
@@ -19,7 +19,7 @@
     width: 6px;
   }
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    @apply bg-base-600 rounded-full;
+    @apply bg-paper-300 rounded-full;
   }
   .scrollbar-thin::-webkit-scrollbar-track {
     @apply bg-transparent;
@@ -28,10 +28,10 @@
   /* Unified heading language: one label style for every section/eyebrow,
      one title style for every document/resolution heading. */
   .text-label {
-    @apply text-[11px] font-semibold uppercase tracking-widest2 text-slate-500;
+    @apply text-[11px] font-semibold uppercase tracking-widest2 text-ink-500;
   }
   .text-title {
-    @apply font-semibold tracking-tight text-slate-50;
+    @apply font-semibold tracking-tight text-ink-900;
   }
 }
 
