@@ -1,0 +1,51 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /Resources << /Font << /F1 4 0 R /F2 6 0 R >> >> /MediaBox [0 0 612 792] /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 1570 >>
+stream
+BT /F1 10 Tf 72 740 Td (AGENCIA PERUANA DE INVESTIGACION Y DESARROLLO E INTELIGENCIA ARTIFICIAL) Tj ET
+BT /F1 10 Tf 72 725.0 Td (Portal de Jurisprudencia Penal) Tj ET
+BT /F1 14 Tf 72 702.8 Td (Acuerdo Plenario N. No. 1-2026/CJ-116) Tj ET
+BT /F1 13 Tf 72 674.5999999999999 Td (Determinacion judicial de la pena en el concurso real de delitos) Tj ET
+BT /F1 10 Tf 72 647.8999999999999 Td (Sala: Salas Penales Permanente y Transitorias - Corte Suprema) Tj ET
+BT /F1 10 Tf 72 632.8999999999999 Td (Fecha: 15 de enero de 2026) Tj ET
+BT /F1 11 Tf 72 610.6999999999998 Td (Resumen de la Ratio Decidendi) Tj ET
+BT /F1 10 Tf 72 594.1999999999998 Td (El Pleno establece los criterios para la determinacion de la pena concreta cuando concurren) Tj ET
+BT /F1 10 Tf 72 579.1999999999998 Td (varios delitos independientes, fijando reglas de proporcionalidad y limites maximos, y) Tj ET
+BT /F1 10 Tf 72 564.1999999999998 Td (precisando el rol del juez en la individualizacion de la pena conforme a los principios de) Tj ET
+BT /F1 10 Tf 72 549.1999999999998 Td (legalidad y culpabilidad.) Tj ET
+BT /F1 11 Tf 72 526.9999999999998 Td (Articulos Aplicados) Tj ET
+BT /F1 10 Tf 72 510.4999999999998 Td (- Art. 50 - Codigo Penal \(Concurso real de delitos\)) Tj ET
+BT /F1 10 Tf 72 495.4999999999998 Td (- Art. 45-A - Codigo Penal \(Individualizacion de la pena\)) Tj ET
+BT /F1 10 Tf 72 480.4999999999998 Td (- Art. VIII - Titulo Preliminar del Codigo Penal) Tj ET
+BT /F1 8 Tf 72 458.2999999999998 Td (Documento de prueba \(mock\) generado para el MVP del Portal de Jurisprudencia Penal.) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000326 00000 n 
+0000001948 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+2018
+%%EOF
