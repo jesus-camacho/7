@@ -14,24 +14,24 @@ export default function SidePanel({ node, open, onClose }: SidePanelProps) {
     <>
       <div
         onClick={onClose}
-        className={`fixed inset-0 z-30 bg-ink-900/20 backdrop-blur-[2px] transition-opacity duration-300 ${
+        className={`fixed inset-0 z-30 bg-black/40 backdrop-blur-[2px] transition-opacity duration-300 ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
 
       <aside
-        className={`fixed right-0 top-0 z-40 flex h-full w-full max-w-md flex-col border-l border-paper-200 bg-paper-0 shadow-panel transition-transform duration-300 ease-out ${
+        className={`fixed right-0 top-0 z-40 flex h-full w-full max-w-md flex-col bg-surface-100 shadow-panel transition-transform duration-300 ease-out ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {node && (
           <>
-            <div className="flex items-start justify-between border-b border-paper-200 px-6 py-5">
+            <div className="flex items-start justify-between px-6 py-5">
               <span
                 className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-label ${
                   isPlenario
-                    ? "bg-gold-100 text-gold-600"
-                    : "bg-blue-100 text-blue-600"
+                    ? "bg-gold-100 text-gold-400"
+                    : "bg-violet-100 text-violet-400"
                 }`}
               >
                 {isPlenario ? <Gavel size={12} /> : <ScrollText size={12} />}
@@ -39,15 +39,15 @@ export default function SidePanel({ node, open, onClose }: SidePanelProps) {
               </span>
               <button
                 onClick={onClose}
-                className="rounded-lg p-1.5 text-ink-400 transition-colors hover:bg-paper-100 hover:text-ink-900"
+                className="rounded-lg p-1.5 text-ink-400 transition-colors hover:bg-surface-200 hover:text-ink-900"
                 aria-label="Cerrar panel"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto scrollbar-thin px-6 py-6">
-              <p className="text-label text-ink-400">{node.numero}</p>
+            <div className="flex-1 overflow-y-auto scrollbar-thin px-6 py-2">
+              <p className="text-label text-ink-500">{node.numero}</p>
               <h2 className="text-title mt-2 text-xl leading-snug">
                 {node.titulo}
               </h2>
@@ -81,7 +81,7 @@ export default function SidePanel({ node, open, onClose }: SidePanelProps) {
                   {node.articulosAplicados.map((articulo) => (
                     <li
                       key={articulo}
-                      className="rounded-lg border border-paper-200 bg-paper-50 px-3 py-2 text-sm text-ink-700"
+                      className="rounded-lg bg-surface-0/60 px-3 py-2 text-sm text-ink-700"
                     >
                       {articulo}
                     </li>
@@ -90,12 +90,12 @@ export default function SidePanel({ node, open, onClose }: SidePanelProps) {
               </div>
             </div>
 
-            <div className="border-t border-paper-200 px-6 py-5">
+            <div className="px-6 py-6">
               <a
                 href={node.pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold-500 px-4 py-3 text-sm font-semibold text-white shadow-card transition-colors hover:bg-gold-600"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gold-500 px-4 py-3 text-sm font-semibold text-surface-0 shadow-card transition-colors hover:bg-gold-400"
               >
                 <FileText size={16} />
                 Ver PDF Completo

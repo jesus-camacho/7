@@ -1,3 +1,10 @@
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/manrope/500.css";
+@import "@fontsource/manrope/600.css";
+@import "@fontsource/manrope/700.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,7 +17,7 @@
   }
 
   body {
-    @apply bg-paper-50 text-ink-900 antialiased overflow-hidden;
+    @apply bg-surface-0 text-ink-900 antialiased overflow-hidden;
   }
 }
 
@@ -19,19 +26,20 @@
     width: 6px;
   }
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    @apply bg-paper-300 rounded-full;
+    @apply bg-surface-300 rounded-full;
   }
   .scrollbar-thin::-webkit-scrollbar-track {
     @apply bg-transparent;
   }
 
   /* Unified heading language: one label style for every section/eyebrow,
-     one title style for every document/resolution heading. */
+     one title style for every document/resolution heading — both set in
+     the display face so headings read distinctly from body copy. */
   .text-label {
-    @apply text-[11px] font-semibold uppercase tracking-widest2 text-ink-500;
+    @apply font-display text-[11px] font-semibold uppercase tracking-widest2 text-ink-500;
   }
   .text-title {
-    @apply font-semibold tracking-tight text-ink-900;
+    @apply font-display font-semibold tracking-tight text-ink-900;
   }
 }
 

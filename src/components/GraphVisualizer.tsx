@@ -38,12 +38,11 @@ const withAlpha = (hex: string, alpha: number) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
-// Darken a hex color toward ink for a crisp outline/ring on a light canvas.
-const darken = (hex: string, amount: number) => {
+const lighten = (hex: string, amount: number) => {
   const n = parseInt(hex.slice(1), 16);
-  const r = Math.round(((n >> 16) & 255) * (1 - amount));
-  const g = Math.round(((n >> 8) & 255) * (1 - amount));
-  const b = Math.round((n & 255) * (1 - amount));
+  const r = Math.round(((n >> 16) & 255) + (255 - ((n >> 16) & 255)) * amount);
+  const g = Math.round(((n >> 8) & 255) + (255 - ((n >> 8) & 255)) * amount);
+  const b = Math.round((n & 255) + (255 - (n & 255)) * amount);
   return `rgb(${r}, ${g}, ${b})`;
 };
 
@@ -85,8 +84,8 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
       resetView,
     }));
 
-    // Spread nodes out for a clean, minimal diagram before the simulation
-    // settles (must be applied before it cools down, not after).
+    // Spread nodes out for a clean diagram before the simulation settles
+    // (must be applied before it cools down, not after).
     useEffect(() => {
       if (!fgRef.current) return;
       fgRef.current.d3Force("charge")?.strength(-220);
@@ -105,15 +104,7 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
     ).current;
 
     return (
-      <div
-        ref={containerRef}
-        className="relative h-full w-full bg-paper-50"
-        style={{
-          backgroundImage:
-            "radial-gradient(rgba(92, 103, 121, 0.16) 1px, transparent 1px)",
-          backgroundSize: "22px 22px",
-        }}
-      >
+      <div ref={containerRef} className="relative h-full w-full bg-surface-0">
         <ForceGraph2D
           ref={fgRef}
           width={dimensions.width}
@@ -122,15 +113,15 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
           backgroundColor="rgba(0,0,0,0)"
           nodeId="id"
           nodeVal={(n) => (n as GraphNode).val}
-          linkColor={() => "rgba(92, 103, 121, 0.3)"}
-          linkWidth={1.1}
+          linkColor={() => "rgba(199, 197, 192, 0.16)"}
+          linkWidth={1}
           linkDirectionalParticles={reduceMotion ? 0 : 2}
-          linkDirectionalParticleWidth={2.2}
+          linkDirectionalParticleWidth={2.4}
           linkDirectionalParticleSpeed={0.0035}
           linkDirectionalParticleColor={(l: any) => {
             const target = l.target as GraphNode;
             const color = typeof target === "object" ? target?.color : undefined;
-            return color ? withAlpha(color, 0.9) : "rgba(200, 144, 26, 0.8)";
+            return color ? withAlpha(color, 0.95) : "rgba(242, 179, 68, 0.9)";
           }}
           onNodeClick={(n) => onSelectNode(n as GraphNode)}
           onNodeHover={(n) => setHoverId((n as NodeObject | null)?.id?.toString() ?? null)}
@@ -143,19 +134,18 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
             const r = nodeRadius(node.val);
             const isActive = node.id === selectedId || node.id === hoverId;
 
-            // Soft drop shadow for a raised, tactile disc on the light canvas.
+            // Soft ambient glow, restrained rather than a hard neon halo.
             ctx.save();
-            ctx.shadowColor = "rgba(22, 28, 40, 0.18)";
-            ctx.shadowBlur = 6 / globalScale;
-            ctx.shadowOffsetY = 1.5 / globalScale;
+            ctx.shadowColor = withAlpha(node.color, isActive ? 0.55 : 0.3);
+            ctx.shadowBlur = (isActive ? 22 : 12) / globalScale;
             ctx.beginPath();
             ctx.arc(x, y, r, 0, Math.PI * 2);
             ctx.fillStyle = node.color;
             ctx.fill();
             ctx.restore();
 
-            ctx.lineWidth = 1.4 / globalScale;
-            ctx.strokeStyle = darken(node.color, 0.28);
+            ctx.lineWidth = 1.2 / globalScale;
+            ctx.strokeStyle = lighten(node.color, 0.25);
             ctx.stroke();
 
             // Ambient orbit ring: a slow-rotating partial arc, subtle and
@@ -164,14 +154,14 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
             const t = reduceMotion ? 0 : Date.now() / ROTATION_PERIOD_MS;
             const angle = t * Math.PI * 2 + phase;
             ctx.beginPath();
-            ctx.strokeStyle = darken(node.color, isActive ? 0.1 : 0.35);
+            ctx.strokeStyle = withAlpha(lighten(node.color, 0.2), isActive ? 0.9 : 0.45);
             ctx.lineWidth = (isActive ? 2 : 1.3) / globalScale;
             ctx.arc(x, y, r + 4.5 / globalScale, angle, angle + Math.PI * 0.55);
             ctx.stroke();
 
             if (isActive) {
               ctx.beginPath();
-              ctx.strokeStyle = "rgba(22, 28, 40, 0.55)";
+              ctx.strokeStyle = "rgba(238, 236, 231, 0.8)";
               ctx.lineWidth = 1.6 / globalScale;
               ctx.arc(x, y, r + 4.5 / globalScale, angle + Math.PI, angle + Math.PI * 1.55);
               ctx.stroke();
@@ -180,10 +170,10 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
             // Label
             if (globalScale > 1.1 || isActive) {
               const fontSize = 10.5 / globalScale;
-              ctx.font = `600 ${fontSize}px Inter, sans-serif`;
+              ctx.font = `600 ${fontSize}px Manrope, Inter, sans-serif`;
               ctx.textAlign = "center";
               ctx.textBaseline = "top";
-              ctx.fillStyle = "rgba(51, 60, 77, 0.9)";
+              ctx.fillStyle = "rgba(199, 197, 192, 0.9)";
               ctx.fillText(node.numero, x, y + r + 8 / globalScale);
             }
           }}
@@ -199,13 +189,13 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
           autoPauseRedraw={reduceMotion}
         />
 
-        <div className="pointer-events-none absolute bottom-5 left-5 flex flex-col gap-1.5 rounded-lg border border-paper-200 bg-paper-0/90 px-4 py-3 text-xs text-ink-500 shadow-card backdrop-blur-sm">
+        <div className="pointer-events-none absolute bottom-6 left-6 flex flex-col gap-1.5 rounded-xl bg-surface-100/90 px-4 py-3 text-xs text-ink-500 shadow-float backdrop-blur-md">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-gold-500" />
+            <span className="h-2 w-2 rounded-full bg-gold-400" />
             Acuerdos Plenarios
           </div>
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-blue-500" />
+            <span className="h-2 w-2 rounded-full bg-violet-400" />
             Casaciones
           </div>
           <div className="mt-1 text-label text-[10px] text-ink-400">

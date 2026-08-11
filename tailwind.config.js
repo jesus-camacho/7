@@ -4,32 +4,30 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Light, paper-toned surface scale (0 = white, higher = deeper).
-        paper: {
-          0: "#ffffff",
-          50: "#f6f7fa",
-          100: "#eef1f6",
-          200: "#e2e6ee",
-          300: "#ccd2de",
+        // Warm, near-black "Obsidian" surface scale (0 = page, higher = more elevated).
+        surface: {
+          0: "#18181b",
+          100: "#1f1f24",
+          200: "#28282e",
+          300: "#38383f",
         },
-        // Neutral ink scale for text.
         ink: {
-          900: "#161c28",
-          700: "#333c4d",
-          500: "#5c6779",
-          400: "#8892a3",
+          900: "#eeece7",
+          700: "#c7c5c0",
+          500: "#96948d",
+          400: "#6f6d68",
         },
         gold: {
-          100: "#fbedd2",
-          400: "#e0a723",
-          500: "#c8901a",
-          600: "#a06f10",
+          100: "rgba(242, 179, 68, 0.14)",
+          400: "#f2b344",
+          500: "#eaa52e",
+          600: "#c98a1e",
         },
-        blue: {
-          100: "#e2eaff",
-          400: "#4c78e6",
-          500: "#3660d1",
-          600: "#2748a8",
+        violet: {
+          100: "rgba(157, 124, 245, 0.16)",
+          400: "#a98ef7",
+          500: "#8f6ff2",
+          600: "#7a56e8",
         },
       },
       fontFamily: {
@@ -41,13 +39,21 @@ export default {
           "Segoe UI",
           "sans-serif",
         ],
+        display: [
+          "Manrope",
+          "Inter",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+        ],
       },
       letterSpacing: {
         widest2: "0.14em",
       },
       boxShadow: {
-        panel: "-12px 0 32px -14px rgba(22, 28, 40, 0.25)",
-        card: "0 1px 2px rgba(22, 28, 40, 0.06), 0 1px 1px rgba(22, 28, 40, 0.04)",
+        panel: "-16px 0 40px -16px rgba(0, 0, 0, 0.5)",
+        float: "0 8px 30px -6px rgba(0, 0, 0, 0.45)",
+        card: "0 1px 2px rgba(0, 0, 0, 0.25)",
       },
     },
   },

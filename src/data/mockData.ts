@@ -96,7 +96,7 @@ export const resolucionesMock: Resolucion[] = [
 ];
 
 const colorPorTipo = (tipo: Resolucion["tipo"]) =>
-  tipo === "Acuerdo Plenario" ? "#c8901a" : "#3660d1";
+  tipo === "Acuerdo Plenario" ? "#eaa52e" : "#8f6ff2";
 
 const nodes: GraphNode[] = resolucionesMock.map((r) => ({
   ...r,
