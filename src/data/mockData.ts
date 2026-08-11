@@ -5,6 +5,11 @@ import { Resolucion, GraphData, GraphNode } from "../types";
  * Contenido ficticio generado únicamente para poblar la interfaz del MVP.
  * Debe reemplazarse por datos reales (API / base de datos de jurisprudencia)
  * antes de cualquier lanzamiento público.
+ *
+ * `pdfUrl` apunta a nuestro propio repositorio de documentos (public/documentos),
+ * nunca al portal institucional de origen: cada resolución se descarga una sola
+ * vez, se indexa y se sirve directamente desde aquí para garantizar
+ * disponibilidad y una experiencia de un solo clic al documento.
  */
 export const resolucionesMock: Resolucion[] = [
   {
@@ -22,7 +27,7 @@ export const resolucionesMock: Resolucion[] = [
       "Art. 45°-A - Código Penal (Individualización de la pena)",
       "Art. VIII - Título Preliminar del Código Penal",
     ],
-    pdfUrl: "https://www.pj.gob.pe/",
+    pdfUrl: "/documentos/ap-01-2026.pdf",
   },
   {
     id: "cas-245-2019",
@@ -38,7 +43,7 @@ export const resolucionesMock: Resolucion[] = [
       "Art. 158° - Código Procesal Penal (Prueba indiciaria)",
       "Art. 317° - Código Penal (Organización criminal)",
     ],
-    pdfUrl: "https://www.pj.gob.pe/",
+    pdfUrl: "/documentos/cas-245-2019.pdf",
   },
   {
     id: "cas-318-2020",
@@ -54,7 +59,7 @@ export const resolucionesMock: Resolucion[] = [
       "Art. 46°-B - Código Penal (Reincidencia)",
       "Art. 50° - Código Penal (Concurso real de delitos)",
     ],
-    pdfUrl: "https://www.pj.gob.pe/",
+    pdfUrl: "/documentos/cas-318-2020.pdf",
   },
   {
     id: "cas-452-2021",
@@ -70,7 +75,7 @@ export const resolucionesMock: Resolucion[] = [
       "Art. 139° inciso 5 - Constitución Política del Perú",
       "Art. 394° - Código Procesal Penal (Requisitos de la sentencia)",
     ],
-    pdfUrl: "https://www.pj.gob.pe/",
+    pdfUrl: "/documentos/cas-452-2021.pdf",
   },
   {
     id: "cas-587-2022",
@@ -86,17 +91,17 @@ export const resolucionesMock: Resolucion[] = [
       "Art. VIII - Título Preliminar del Código Penal (Proporcionalidad)",
       "Art. 57° - Código Penal (Suspensión de la ejecución de la pena)",
     ],
-    pdfUrl: "https://www.pj.gob.pe/",
+    pdfUrl: "/documentos/cas-587-2022.pdf",
   },
 ];
 
 const colorPorTipo = (tipo: Resolucion["tipo"]) =>
-  tipo === "Acuerdo Plenario" ? "#eab040" : "#3b82f6";
+  tipo === "Acuerdo Plenario" ? "#af8740" : "#526a8c";
 
 const nodes: GraphNode[] = resolucionesMock.map((r) => ({
   ...r,
   color: colorPorTipo(r.tipo),
-  val: Math.max(4, Math.round(r.citas / 12)),
+  val: Math.max(3, Math.round(r.citas / 22)),
 }));
 
 export const graphDataMock: GraphData = {

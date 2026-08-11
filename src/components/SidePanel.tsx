@@ -27,18 +27,16 @@ export default function SidePanel({ node, open, onClose }: SidePanelProps) {
         {node && (
           <>
             <div className="flex items-start justify-between border-b border-base-700 px-6 py-5">
-              <div className="flex items-center gap-2">
-                <span
-                  className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium ${
-                    isPlenario
-                      ? "bg-gold-500/15 text-gold-400"
-                      : "bg-azure-500/15 text-azure-400"
-                  }`}
-                >
-                  {isPlenario ? <Gavel size={13} /> : <ScrollText size={13} />}
-                  {node.tipo}
-                </span>
-              </div>
+              <span
+                className={`inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-label ${
+                  isPlenario
+                    ? "border-gold-600/40 text-gold-400"
+                    : "border-steel-600/40 text-steel-300"
+                }`}
+              >
+                {isPlenario ? <Gavel size={12} /> : <ScrollText size={12} />}
+                {node.tipo}
+              </span>
               <button
                 onClick={onClose}
                 className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-base-800 hover:text-slate-100"
@@ -49,10 +47,8 @@ export default function SidePanel({ node, open, onClose }: SidePanelProps) {
             </div>
 
             <div className="flex-1 overflow-y-auto scrollbar-thin px-6 py-6">
-              <p className="text-xs uppercase tracking-wide text-slate-500">
-                {node.numero}
-              </p>
-              <h2 className="mt-1.5 text-xl font-semibold leading-snug text-slate-50">
+              <p className="text-label text-slate-500">{node.numero}</p>
+              <h2 className="text-title mt-2 text-xl leading-snug">
                 {node.titulo}
               </h2>
 
@@ -68,20 +64,20 @@ export default function SidePanel({ node, open, onClose }: SidePanelProps) {
                 <span>{node.citas} citas</span>
               </div>
 
-              <div className="mt-6">
-                <h3 className="text-sm font-semibold text-slate-200">
+              <div className="mt-7">
+                <h3 className="text-label text-slate-400">
                   Resumen de la Ratio Decidendi
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                <p className="mt-2.5 text-sm leading-relaxed text-slate-300">
                   {node.resumenRatioDecidendi}
                 </p>
               </div>
 
-              <div className="mt-6">
-                <h3 className="text-sm font-semibold text-slate-200">
+              <div className="mt-7">
+                <h3 className="text-label text-slate-400">
                   Artículos Aplicados
                 </h3>
-                <ul className="mt-2 space-y-2">
+                <ul className="mt-2.5 space-y-2">
                   {node.articulosAplicados.map((articulo) => (
                     <li
                       key={articulo}
@@ -99,11 +95,14 @@ export default function SidePanel({ node, open, onClose }: SidePanelProps) {
                 href={node.pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gold-500 px-4 py-3 text-sm font-semibold text-base-950 transition-colors hover:bg-gold-400"
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-gold-500 px-4 py-3 text-sm font-semibold text-base-950 transition-colors hover:bg-gold-400"
               >
-                <FileText size={17} />
+                <FileText size={16} />
                 Ver PDF Completo
               </a>
+              <p className="mt-2 text-center text-[11px] text-slate-600">
+                Servido desde nuestro repositorio de documentos
+              </p>
             </div>
           </>
         )}

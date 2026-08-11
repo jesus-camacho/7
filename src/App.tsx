@@ -32,26 +32,15 @@ export default function App() {
     graphRef.current?.focusNode(node.id);
   };
 
-  const closePanel = () => setPanelOpen(false);
+  const closePanel = () => {
+    setPanelOpen(false);
+    graphRef.current?.resetView();
+  };
 
   return (
     <div className="flex h-screen w-screen flex-col bg-base-950">
-      <header className="z-20 flex items-center gap-6 border-b border-base-700 bg-base-900/90 px-6 py-3 backdrop-blur-sm">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold-500/15 text-gold-400">
-            <Scale size={18} />
-          </div>
-          <div className="leading-tight">
-            <p className="text-sm font-semibold text-slate-100">
-              Agencia Peruana de Investigación y Desarrollo e IA
-            </p>
-            <p className="text-xs text-slate-500">
-              Portal de Jurisprudencia Penal
-            </p>
-          </div>
-        </div>
-
-        <div className="relative mx-auto w-full max-w-xl">
+      <header className="z-20 border-b border-base-700 bg-base-900/90 px-6 py-4 backdrop-blur-sm">
+        <div className="relative mx-auto w-full max-w-2xl">
           <div className="relative">
             <Search
               size={18}
@@ -63,7 +52,7 @@ export default function App() {
               onFocus={() => setSearchFocused(true)}
               onBlur={() => setTimeout(() => setSearchFocused(false), 120)}
               placeholder="Buscar por número de resolución o materia..."
-              className="w-full rounded-full border border-base-700 bg-base-850 py-2.5 pl-11 pr-4 text-sm text-slate-100 placeholder:text-slate-500 outline-none transition-colors focus:border-gold-500/60"
+              className="w-full rounded-full border border-base-700 bg-base-850 py-3 pl-11 pr-4 text-sm text-slate-100 placeholder:text-slate-500 outline-none transition-colors focus:border-gold-500/50"
             />
           </div>
 
@@ -75,16 +64,16 @@ export default function App() {
                     onMouseDown={() => selectNode(r)}
                     className="flex w-full flex-col gap-0.5 px-4 py-2.5 text-left hover:bg-base-800"
                   >
-                    <span className="text-sm text-slate-100">{r.titulo}</span>
-                    <span className="text-xs text-slate-500">{r.numero}</span>
+                    <span className="text-title text-sm">{r.titulo}</span>
+                    <span className="text-label text-[10px] normal-case tracking-normal text-slate-500">
+                      {r.numero}
+                    </span>
                   </button>
                 </li>
               ))}
             </ul>
           )}
         </div>
-
-        <div className="w-9" />
       </header>
 
       <main className="relative flex-1 overflow-hidden">
@@ -95,6 +84,17 @@ export default function App() {
           onSelectNode={selectNode}
         />
       </main>
+
+      <footer className="z-20 flex items-center gap-2.5 border-t border-base-700 bg-base-900/90 px-6 py-2.5">
+        <div className="flex h-6 w-6 items-center justify-center rounded-md bg-gold-500/10 text-gold-400">
+          <Scale size={13} />
+        </div>
+        <p className="text-label text-slate-500">
+          Agencia Peruana de Investigación y Desarrollo e Inteligencia Artificial
+          <span className="mx-2 text-base-600">·</span>
+          Portal de Jurisprudencia Penal
+        </p>
+      </footer>
 
       <SidePanel node={selectedNode} open={panelOpen} onClose={closePanel} />
     </div>

@@ -1,0 +1,50 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /Resources << /Font << /F1 4 0 R /F2 6 0 R >> >> /MediaBox [0 0 612 792] /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Length 1440 >>
+stream
+BT /F1 10 Tf 72 740 Td (AGENCIA PERUANA DE INVESTIGACION Y DESARROLLO E INTELIGENCIA ARTIFICIAL) Tj ET
+BT /F1 10 Tf 72 725.0 Td (Portal de Jurisprudencia Penal) Tj ET
+BT /F1 14 Tf 72 702.8 Td (Casacion N. No. 245-2019/Lima) Tj ET
+BT /F1 13 Tf 72 674.5999999999999 Td (Valoracion de la prueba indiciaria en delitos de organizacion criminal) Tj ET
+BT /F1 10 Tf 72 647.8999999999999 Td (Sala: Sala Penal Permanente - Corte Suprema) Tj ET
+BT /F1 10 Tf 72 632.8999999999999 Td (Fecha: 22 de agosto de 2019) Tj ET
+BT /F1 11 Tf 72 610.6999999999998 Td (Resumen de la Ratio Decidendi) Tj ET
+BT /F1 10 Tf 72 594.1999999999998 Td (La Sala fija los estandares minimos para que la prueba indiciaria sustente una condena:) Tj ET
+BT /F1 10 Tf 72 579.1999999999998 Td (pluralidad de indicios, interrelacion entre ellos y motivacion explicita del razonamiento) Tj ET
+BT /F1 10 Tf 72 564.1999999999998 Td (inferencial, en armonia con los criterios sentados en el Acuerdo Plenario sobre determinacion) Tj ET
+BT /F1 10 Tf 72 549.1999999999998 Td (de la pena.) Tj ET
+BT /F1 11 Tf 72 526.9999999999998 Td (Articulos Aplicados) Tj ET
+BT /F1 10 Tf 72 510.4999999999998 Td (- Art. 158 - Codigo Procesal Penal \(Prueba indiciaria\)) Tj ET
+BT /F1 10 Tf 72 495.4999999999998 Td (- Art. 317 - Codigo Penal \(Organizacion criminal\)) Tj ET
+BT /F1 8 Tf 72 473.2999999999998 Td (Documento de prueba \(mock\) generado para el MVP del Portal de Jurisprudencia Penal.) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000326 00000 n 
+0000001818 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+1888
+%%EOF

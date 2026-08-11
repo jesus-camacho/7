@@ -24,4 +24,20 @@
   .scrollbar-thin::-webkit-scrollbar-track {
     @apply bg-transparent;
   }
+
+  /* Unified heading language: one label style for every section/eyebrow,
+     one title style for every document/resolution heading. */
+  .text-label {
+    @apply text-[11px] font-semibold uppercase tracking-widest2 text-slate-500;
+  }
+  .text-title {
+    @apply font-semibold tracking-tight text-slate-50;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }
