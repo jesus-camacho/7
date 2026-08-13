@@ -1,4 +1,7 @@
-export type TipoResolucion = "Acuerdo Plenario" | "Casacion";
+export type TipoResolucion =
+  | "Acuerdo Plenario"
+  | "Casacion"
+  | "Recurso de Nulidad";
 
 export interface Resolucion {
   id: string;

@@ -29,6 +29,12 @@ export default {
           500: "#8f6ff2",
           600: "#7a56e8",
         },
+        teal: {
+          100: "rgba(45, 212, 191, 0.16)",
+          400: "#5eead4",
+          500: "#2dd4bf",
+          600: "#14b8a6",
+        },
       },
       fontFamily: {
         sans: [

@@ -1,5 +1,5 @@
-import { FileText, Gavel, ScrollText, X } from "lucide-react";
-import { GraphNode } from "../types";
+import { FileText, Gavel, Scale, ScrollText, X } from "lucide-react";
+import { GraphNode, TipoResolucion } from "../types";
 
 interface SidePanelProps {
   node: GraphNode | null;
@@ -7,8 +7,20 @@ interface SidePanelProps {
   onClose: () => void;
 }
 
+const BADGE_STYLE: Record<TipoResolucion, string> = {
+  "Acuerdo Plenario": "bg-gold-100 text-gold-400",
+  Casacion: "bg-violet-100 text-violet-400",
+  "Recurso de Nulidad": "bg-teal-100 text-teal-400",
+};
+
+const BADGE_ICON: Record<TipoResolucion, typeof Gavel> = {
+  "Acuerdo Plenario": Gavel,
+  Casacion: ScrollText,
+  "Recurso de Nulidad": Scale,
+};
+
 export default function SidePanel({ node, open, onClose }: SidePanelProps) {
-  const isPlenario = node?.tipo === "Acuerdo Plenario";
+  const BadgeIcon = node ? BADGE_ICON[node.tipo] : null;
 
   return (
     <>
@@ -28,13 +40,9 @@ export default function SidePanel({ node, open, onClose }: SidePanelProps) {
           <>
             <div className="flex items-start justify-between px-6 py-5">
               <span
-                className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-label ${
-                  isPlenario
-                    ? "bg-gold-100 text-gold-400"
-                    : "bg-violet-100 text-violet-400"
-                }`}
+                className={`inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-label ${BADGE_STYLE[node.tipo]}`}
               >
-                {isPlenario ? <Gavel size={12} /> : <ScrollText size={12} />}
+                {BadgeIcon && <BadgeIcon size={12} />}
                 {node.tipo}
               </span>
               <button

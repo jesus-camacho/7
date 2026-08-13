@@ -4,7 +4,7 @@ import GraphVisualizer, {
   GraphVisualizerHandle,
 } from "./components/GraphVisualizer";
 import SidePanel from "./components/SidePanel";
-import { graphDataMock } from "./data/mockData";
+import { graphData } from "./data/resoluciones";
 import { GraphNode } from "./types";
 
 export default function App() {
@@ -17,7 +17,7 @@ export default function App() {
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return [];
-    return graphDataMock.nodes.filter(
+    return graphData.nodes.filter(
       (n) =>
         n.titulo.toLowerCase().includes(q) ||
         n.numero.toLowerCase().includes(q)
@@ -41,7 +41,7 @@ export default function App() {
     <div className="relative h-screen w-screen overflow-hidden bg-surface-0">
       <GraphVisualizer
         ref={graphRef}
-        data={graphDataMock}
+        data={graphData}
         selectedId={panelOpen ? selectedNode?.id ?? null : null}
         onSelectNode={selectNode}
       />

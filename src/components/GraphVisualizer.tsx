@@ -198,6 +198,10 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
             <span className="h-2 w-2 rounded-full bg-violet-400" />
             Casaciones
           </div>
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-teal-400" />
+            Recursos de Nulidad
+          </div>
           <div className="mt-1 text-label text-[10px] text-ink-400">
             Tamaño del nodo = número de citas
           </div>
