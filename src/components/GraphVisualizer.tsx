@@ -20,31 +20,9 @@ export interface GraphVisualizerHandle {
   resetView: () => void;
 }
 
-const ROTATION_PERIOD_MS = 6000;
+const nodeRadius = (val: number) => 2 + Math.sqrt(val) * 1.9;
 
-const hashPhase = (id: string): number => {
-  let h = 0;
-  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
-  return (h % 1000) / 1000;
-};
-
-const nodeRadius = (val: number) => 5 + Math.sqrt(val) * 3.2;
-
-const withAlpha = (hex: string, alpha: number) => {
-  const n = parseInt(hex.slice(1), 16);
-  const r = (n >> 16) & 255;
-  const g = (n >> 8) & 255;
-  const b = n & 255;
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-};
-
-const lighten = (hex: string, amount: number) => {
-  const n = parseInt(hex.slice(1), 16);
-  const r = Math.round(((n >> 16) & 255) + (255 - ((n >> 16) & 255)) * amount);
-  const g = Math.round(((n >> 8) & 255) + (255 - ((n >> 8) & 255)) * amount);
-  const b = Math.round((n & 255) + (255 - (n & 255)) * amount);
-  return `rgb(${r}, ${g}, ${b})`;
-};
+const shortLabel = (n: GraphNode) => n.id.toUpperCase().replace(/-/g, " ");
 
 const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
   ({ data, selectedId, onSelectNode }, ref) => {
@@ -84,12 +62,13 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
       resetView,
     }));
 
-    // Spread nodes out for a clean diagram before the simulation settles
-    // (must be applied before it cools down, not after).
+    // Dense, tightly-packed layout to match the reference: short link
+    // distance and mild repulsion so the graph reads as a compact web
+    // rather than spread-out balloons.
     useEffect(() => {
       if (!fgRef.current) return;
-      fgRef.current.d3Force("charge")?.strength(-220);
-      fgRef.current.d3Force("link")?.distance(130);
+      fgRef.current.d3Force("charge")?.strength(-90);
+      fgRef.current.d3Force("link")?.distance(45);
       fgRef.current.d3ReheatSimulation();
     }, []);
 
@@ -103,58 +82,6 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
       resetView();
     }, [resetView]);
 
-    // autoPauseRedraw={false} (below) keeps the canvas redrawing
-    // continuously at rest, which is what makes the orbit ring rotation
-    // and the traveling link particles visible without any interaction.
-    const reduceMotion = useRef(
-      typeof window !== "undefined" &&
-        window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ).current;
-
-    // Drawn from onRenderFramePost rather than nodeCanvasObject: once the
-    // force simulation settles, the per-node canvas-object callback stops
-    // being invoked every frame (the library skips redrawing static
-    // nodes), which silently freezes anything time-based drawn there.
-    // onRenderFramePost keeps firing every frame regardless, so the
-    // rotating ring lives here instead.
-    //
-    // The rotation angle is deliberately wrapped mod 2π before being
-    // passed to ctx.arc(): Date.now()-based angles grow into the
-    // billions of radians, and Chromium's arc tessellation silently
-    // stops animating visibly at that magnitude even though the value
-    // is still changing each frame. Keeping it small avoids that.
-    const TWO_PI = Math.PI * 2;
-    const drawOrbitRings = useCallback(
-      (ctx: CanvasRenderingContext2D, globalScale: number) => {
-        if (reduceMotion) return;
-        const t = (Date.now() / ROTATION_PERIOD_MS) % 1;
-        for (const node of data.nodes) {
-          const x = node.x ?? 0;
-          const y = node.y ?? 0;
-          const r = nodeRadius(node.val);
-          const isActive = node.id === selectedId || node.id === hoverId;
-          const phase = hashPhase(node.id) * TWO_PI;
-          const angle = (t * TWO_PI + phase) % TWO_PI;
-          const ringR = r + 5.5 / globalScale;
-
-          ctx.beginPath();
-          ctx.strokeStyle = withAlpha(lighten(node.color, 0.2), isActive ? 0.95 : 0.65);
-          ctx.lineWidth = (isActive ? 2.4 : 1.8) / globalScale;
-          ctx.arc(x, y, ringR, angle, angle + Math.PI * 0.55);
-          ctx.stroke();
-
-          if (isActive) {
-            ctx.beginPath();
-            ctx.strokeStyle = "rgba(238, 236, 231, 0.85)";
-            ctx.lineWidth = 2 / globalScale;
-            ctx.arc(x, y, ringR, angle + Math.PI, angle + Math.PI * 1.55);
-            ctx.stroke();
-          }
-        }
-      },
-      [data.nodes, selectedId, hoverId, reduceMotion]
-    );
-
     return (
       <div ref={containerRef} className="relative h-full w-full bg-surface-0">
         <ForceGraph2D
@@ -165,16 +92,8 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
           backgroundColor="rgba(0,0,0,0)"
           nodeId="id"
           nodeVal={(n) => (n as GraphNode).val}
-          linkColor={() => "rgba(199, 197, 192, 0.16)"}
-          linkWidth={1}
-          linkDirectionalParticles={reduceMotion ? 0 : 2}
-          linkDirectionalParticleWidth={2.4}
-          linkDirectionalParticleSpeed={0.0035}
-          linkDirectionalParticleColor={(l: any) => {
-            const target = l.target as GraphNode;
-            const color = typeof target === "object" ? target?.color : undefined;
-            return color ? withAlpha(color, 0.95) : "rgba(242, 179, 68, 0.9)";
-          }}
+          linkColor={() => "rgba(255, 255, 255, 0.14)"}
+          linkWidth={0.6}
           onNodeClick={(n) => onSelectNode(n as GraphNode)}
           onNodeHover={(n) => setHoverId((n as NodeObject | null)?.id?.toString() ?? null)}
           onEngineStop={handleEngineStop}
@@ -186,28 +105,25 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
             const r = nodeRadius(node.val);
             const isActive = node.id === selectedId || node.id === hoverId;
 
-            // Soft ambient glow, restrained rather than a hard neon halo.
-            ctx.save();
-            ctx.shadowColor = withAlpha(node.color, isActive ? 0.55 : 0.3);
-            ctx.shadowBlur = (isActive ? 22 : 12) / globalScale;
             ctx.beginPath();
             ctx.arc(x, y, r, 0, Math.PI * 2);
             ctx.fillStyle = node.color;
             ctx.fill();
-            ctx.restore();
 
-            ctx.lineWidth = 1.2 / globalScale;
-            ctx.strokeStyle = lighten(node.color, 0.25);
-            ctx.stroke();
+            if (isActive) {
+              ctx.lineWidth = 1.6 / globalScale;
+              ctx.strokeStyle = "rgba(255, 255, 255, 0.9)";
+              ctx.stroke();
+            }
 
-            // Label
-            if (globalScale > 1.1 || isActive) {
+            const showLabel = isActive || r > 8 || globalScale > 2.2;
+            if (showLabel) {
               const fontSize = 10.5 / globalScale;
-              ctx.font = `600 ${fontSize}px Manrope, Inter, sans-serif`;
+              ctx.font = `500 ${fontSize}px Inter, sans-serif`;
               ctx.textAlign = "center";
               ctx.textBaseline = "top";
-              ctx.fillStyle = "rgba(199, 197, 192, 0.9)";
-              ctx.fillText(node.numero, x, y + r + 8 / globalScale);
+              ctx.fillStyle = "rgba(255, 255, 255, 0.92)";
+              ctx.fillText(shortLabel(node), x, y + r + 5 / globalScale);
             }
           }}
           nodePointerAreaPaint={(n, color, ctx) => {
@@ -219,24 +135,19 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
           }}
           cooldownTicks={100}
           d3VelocityDecay={0.4}
-          autoPauseRedraw={reduceMotion}
-          onRenderFramePost={drawOrbitRings}
+          autoPauseRedraw={true}
         />
 
-        <div className="pointer-events-none absolute bottom-6 left-6 flex flex-col gap-1.5 rounded-xl bg-surface-100/90 px-4 py-3 text-xs text-ink-500 shadow-float backdrop-blur-md">
+        <div className="pointer-events-none absolute bottom-6 left-6 flex flex-col gap-1.5 rounded-xl bg-black/70 px-4 py-3 text-xs text-white/70 shadow-float backdrop-blur-md">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-gold-400" />
-            Acuerdos Plenarios
+            <span className="h-2 w-2 rounded-full bg-white/85" />
+            Resolución
           </div>
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-violet-400" />
-            Casaciones
+            <span className="h-2 w-2 rounded-full" style={{ backgroundColor: "#8bc34a" }} />
+            Doctrina vinculante (Acuerdo Plenario)
           </div>
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-teal-400" />
-            Recursos de Nulidad
-          </div>
-          <div className="mt-1 text-label text-[10px] text-ink-400">
+          <div className="mt-1 text-label text-[10px] text-white/40">
             Tamaño del nodo = número de citas
           </div>
         </div>

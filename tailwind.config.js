@@ -4,18 +4,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Warm, near-black "Obsidian" surface scale (0 = page, higher = more elevated).
+        // Near-black graph-view surface scale (0 = page, higher = more elevated).
         surface: {
-          0: "#18181b",
-          100: "#1f1f24",
-          200: "#28282e",
-          300: "#38383f",
+          0: "#050505",
+          100: "#111113",
+          200: "#1b1b1e",
+          300: "#2a2a2e",
         },
         ink: {
-          900: "#eeece7",
-          700: "#c7c5c0",
-          500: "#96948d",
-          400: "#6f6d68",
+          900: "#ffffff",
+          700: "#d4d4d8",
+          500: "#9a9aa0",
+          400: "#6b6b70",
         },
         gold: {
           100: "rgba(242, 179, 68, 0.14)",

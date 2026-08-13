@@ -107,14 +107,18 @@ export const resoluciones: Resolucion[] = [
   },
 ];
 
+// Graph-view palette: nodes read mostly as neutral white/light-gray dots,
+// with green reserved for Acuerdos Plenarios (binding doctrine) so it
+// stands out sparingly, the way accent-colored notes do in a knowledge
+// graph — not one color per document type.
 const colorPorTipo = (tipo: Resolucion["tipo"]) => {
   switch (tipo) {
     case "Acuerdo Plenario":
-      return "#eaa52e";
+      return "#8bc34a";
     case "Casacion":
-      return "#8f6ff2";
+      return "#e4e4e7";
     case "Recurso de Nulidad":
-      return "#2dd4bf";
+      return "#d4d4d8";
   }
 };
 
