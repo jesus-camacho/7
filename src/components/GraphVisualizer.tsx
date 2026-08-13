@@ -20,7 +20,7 @@ export interface GraphVisualizerHandle {
   resetView: () => void;
 }
 
-const ROTATION_PERIOD_MS = 22000;
+const ROTATION_PERIOD_MS = 6000;
 
 const hashPhase = (id: string): number => {
   let h = 0;
@@ -93,15 +93,67 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
       fgRef.current.d3ReheatSimulation();
     }, []);
 
-    // Ambient rotation for the orbit ring drawn on each node is driven by
-    // wall-clock time inside nodeCanvasObject, combined with a per-node
-    // phase offset so nodes don't spin in lockstep. autoPauseRedraw={false}
-    // (below) keeps the canvas redrawing continuously, which is what makes
-    // that motion (and the traveling link particles) visible at rest.
+    // onEngineStop can fire more than once as the simulation settles in
+    // bursts; only auto-fit the very first time, otherwise each firing
+    // restarts a 600ms zoom transition and the view never truly settles.
+    const hasAutoFitted = useRef(false);
+    const handleEngineStop = useCallback(() => {
+      if (hasAutoFitted.current) return;
+      hasAutoFitted.current = true;
+      resetView();
+    }, [resetView]);
+
+    // autoPauseRedraw={false} (below) keeps the canvas redrawing
+    // continuously at rest, which is what makes the orbit ring rotation
+    // and the traveling link particles visible without any interaction.
     const reduceMotion = useRef(
       typeof window !== "undefined" &&
         window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ).current;
+
+    // Drawn from onRenderFramePost rather than nodeCanvasObject: once the
+    // force simulation settles, the per-node canvas-object callback stops
+    // being invoked every frame (the library skips redrawing static
+    // nodes), which silently freezes anything time-based drawn there.
+    // onRenderFramePost keeps firing every frame regardless, so the
+    // rotating ring lives here instead.
+    //
+    // The rotation angle is deliberately wrapped mod 2π before being
+    // passed to ctx.arc(): Date.now()-based angles grow into the
+    // billions of radians, and Chromium's arc tessellation silently
+    // stops animating visibly at that magnitude even though the value
+    // is still changing each frame. Keeping it small avoids that.
+    const TWO_PI = Math.PI * 2;
+    const drawOrbitRings = useCallback(
+      (ctx: CanvasRenderingContext2D, globalScale: number) => {
+        if (reduceMotion) return;
+        const t = (Date.now() / ROTATION_PERIOD_MS) % 1;
+        for (const node of data.nodes) {
+          const x = node.x ?? 0;
+          const y = node.y ?? 0;
+          const r = nodeRadius(node.val);
+          const isActive = node.id === selectedId || node.id === hoverId;
+          const phase = hashPhase(node.id) * TWO_PI;
+          const angle = (t * TWO_PI + phase) % TWO_PI;
+          const ringR = r + 5.5 / globalScale;
+
+          ctx.beginPath();
+          ctx.strokeStyle = withAlpha(lighten(node.color, 0.2), isActive ? 0.95 : 0.65);
+          ctx.lineWidth = (isActive ? 2.4 : 1.8) / globalScale;
+          ctx.arc(x, y, ringR, angle, angle + Math.PI * 0.55);
+          ctx.stroke();
+
+          if (isActive) {
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(238, 236, 231, 0.85)";
+            ctx.lineWidth = 2 / globalScale;
+            ctx.arc(x, y, ringR, angle + Math.PI, angle + Math.PI * 1.55);
+            ctx.stroke();
+          }
+        }
+      },
+      [data.nodes, selectedId, hoverId, reduceMotion]
+    );
 
     return (
       <div ref={containerRef} className="relative h-full w-full bg-surface-0">
@@ -125,7 +177,7 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
           }}
           onNodeClick={(n) => onSelectNode(n as GraphNode)}
           onNodeHover={(n) => setHoverId((n as NodeObject | null)?.id?.toString() ?? null)}
-          onEngineStop={resetView}
+          onEngineStop={handleEngineStop}
           nodeCanvasObjectMode={() => "replace"}
           nodeCanvasObject={(n, ctx, globalScale) => {
             const node = n as GraphNode;
@@ -148,25 +200,6 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
             ctx.strokeStyle = lighten(node.color, 0.25);
             ctx.stroke();
 
-            // Ambient orbit ring: a slow-rotating partial arc, subtle and
-            // slightly more present on hover/selection.
-            const phase = hashPhase(node.id) * Math.PI * 2;
-            const t = reduceMotion ? 0 : Date.now() / ROTATION_PERIOD_MS;
-            const angle = t * Math.PI * 2 + phase;
-            ctx.beginPath();
-            ctx.strokeStyle = withAlpha(lighten(node.color, 0.2), isActive ? 0.9 : 0.45);
-            ctx.lineWidth = (isActive ? 2 : 1.3) / globalScale;
-            ctx.arc(x, y, r + 4.5 / globalScale, angle, angle + Math.PI * 0.55);
-            ctx.stroke();
-
-            if (isActive) {
-              ctx.beginPath();
-              ctx.strokeStyle = "rgba(238, 236, 231, 0.8)";
-              ctx.lineWidth = 1.6 / globalScale;
-              ctx.arc(x, y, r + 4.5 / globalScale, angle + Math.PI, angle + Math.PI * 1.55);
-              ctx.stroke();
-            }
-
             // Label
             if (globalScale > 1.1 || isActive) {
               const fontSize = 10.5 / globalScale;
@@ -187,6 +220,7 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
           cooldownTicks={100}
           d3VelocityDecay={0.4}
           autoPauseRedraw={reduceMotion}
+          onRenderFramePost={drawOrbitRings}
         />
 
         <div className="pointer-events-none absolute bottom-6 left-6 flex flex-col gap-1.5 rounded-xl bg-surface-100/90 px-4 py-3 text-xs text-ink-500 shadow-float backdrop-blur-md">
