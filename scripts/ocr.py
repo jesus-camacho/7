@@ -72,7 +72,10 @@ def aplicar_ocr(origen: Path, destino: Path, idioma: str) -> tuple[bool, str]:
     orden = [
         "ocrmypdf",
         "-l", idioma,
-        "--skip-text",        # respeta las páginas que ya tienen texto
+        # --force-ocr y no --skip-text: estos escaneos traen restos de texto
+        # (sellos, marcas de agua) y --skip-text salta la página entera en
+        # cuanto encuentra alguno, dejando el documento sin reconocer.
+        "--force-ocr",
         "--rotate-pages",     # endereza las escaneadas de lado
         "--deskew",
         "--optimize", "1",
