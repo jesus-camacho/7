@@ -7,6 +7,11 @@ import SidePanel, { Conexion } from "./components/SidePanel";
 import { graphData } from "./data/resoluciones";
 import { GraphNode } from "./types";
 
+/** Quita tildes y pasa a minúsculas: en la práctica nadie escribe
+ *  "absorción" con tilde cuando busca a las apuradas. */
+const normalizar = (t: string) =>
+  t.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
 export default function App() {
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [panelOpen, setPanelOpen] = useState(false);
@@ -16,16 +21,16 @@ export default function App() {
   const graphRef = useRef<GraphVisualizerHandle>(null);
 
   const results = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const q = normalizar(query.trim());
     if (!q) return [];
     return graphData.nodes.filter(
       (n) =>
-        n.titulo.toLowerCase().includes(q) ||
-        n.numero.toLowerCase().includes(q) ||
+        normalizar(n.titulo).includes(q) ||
+        normalizar(n.numero).includes(q) ||
+        normalizar(n.resumenRatioDecidendi).includes(q) ||
         (n.fundamentos ?? []).some(
           (f) =>
-            f.tema.toLowerCase().includes(q) ||
-            f.texto.toLowerCase().includes(q)
+            normalizar(f.tema).includes(q) || normalizar(f.texto).includes(q)
         )
     );
   }, [query]);
