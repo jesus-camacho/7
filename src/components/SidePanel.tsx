@@ -22,6 +22,7 @@ const BADGE_STYLE: Record<TipoResolucion, string> = {
   Apelacion: "bg-[rgba(244,164,96,0.16)] text-[#e8b07a]",
   "Habeas Corpus": "bg-[rgba(147,197,253,0.16)] text-[#93c5fd]",
   "Sentencia CIDH": "bg-[rgba(139,195,74,0.16)] text-[#a5d16a]",
+  Resolucion: "bg-[rgba(159,180,199,0.16)] text-[#b9c9d6]",
 };
 
 const BADGE_ICON: Record<TipoResolucion, typeof Gavel> = {
@@ -31,6 +32,7 @@ const BADGE_ICON: Record<TipoResolucion, typeof Gavel> = {
   Apelacion: Undo2,
   "Habeas Corpus": ShieldCheck,
   "Sentencia CIDH": Globe2,
+  Resolucion: FileText,
 };
 
 export default function SidePanel({
@@ -106,13 +108,15 @@ export default function SidePanel({
               <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-ink-500">
                 <span>{node.sala}</span>
                 <span>·</span>
-                <span>
-                  {new Date(node.fecha).toLocaleDateString("es-PE", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </span>
+                {node.fecha && !isNaN(new Date(node.fecha).getTime()) && (
+                  <span>
+                    {new Date(node.fecha).toLocaleDateString("es-PE", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </span>
+                )}
               </div>
 
               <div className="mt-7">

@@ -244,23 +244,23 @@ def identificar(t: str) -> dict:
 
 def extraer_sumilla(t: str) -> str:
     """
-    La sumilla es el resumen que redacta el propio tribunal, antes de
-    'VISTOS'/'ASUNTO'. Se usa tal cual: es texto del documento, no una
-    paráfrasis.
+    La sumilla es el resumen que redacta el propio tribunal. Va después de
+    la palabra "Sumilla" y antes de VISTOS/ASUNTO. Se usa tal cual: es texto
+    del documento, no una paráfrasis nuestra.
     """
-    plano = re.sub(r"\s+", " ", t[:6000])
-    m = re.search(r"(VISTOS|VISTA|ASUNTO|AUTOS Y VISTOS|SENTENCIA DEL TRIBUNAL)", plano)
-    if not m:
+    plano = re.sub(r"\s+", " ", t[:8000])
+    fin = re.search(r"\b(VISTOS|VISTA|ASUNTO|AUTOS Y VISTOS|SENTENCIA DEL TRIBUNAL|CONSIDERANDO)\b", plano)
+    cuerpo = plano[: fin.start()] if fin else plano[:3000]
+
+    marca = re.search(r"\bSUMILLA\b\s*[.:]?\s*", cuerpo, re.I)
+    if marca:
+        cuerpo = cuerpo[marca.end():]
+    else:
+        # sin marca explícita no se puede distinguir el resumen del membrete
         return ""
-    cabeza = plano[:m.start()]
-    # quitar membrete repetido del encabezado
-    cabeza = re.sub(
-        r"CORTE SUPREMA|SALA PENAL \w+|DE JUSTICIA|DE LA REP[UÚ]BLICA|"
-        r"RECURSO DE (NULIDAD|APELACI[OÓ]N)|CASACI[OÓ]N|APELACI[OÓ]N|"
-        r"N\.?[°º]? ?[\d\-]+|Sala (Primera|Segunda)\.?|Sentencia \d+/\d+|"
-        r"EXP\.? N\.?[°º]?[\w\-/\.]+", " ", cabeza)
-    cabeza = re.sub(r"\s+", " ", cabeza).strip(" .-–—")
-    return cabeza if len(cabeza) > 120 else ""
+
+    cuerpo = re.sub(r"\s+", " ", cuerpo).strip(" .,-–—/")
+    return cuerpo if len(cuerpo) > 80 else ""
 
 
 def extraer_epigrafe(t: str) -> str:
@@ -282,7 +282,11 @@ def extraer_epigrafe(t: str) -> str:
         r"CASACI[OÓ]N|APELACI[OÓ]N|EXPEDIENTE[\w .:°º-]*|N\.?[°º]?\s*[\d\-/]+|"
         r"R\.? ?N\.?|Con formato:[^.]*\.?",
         " ", antes)
-    antes = re.sub(r"\s+", " ", antes).strip(" .,-–—/")
+    antes = re.sub(r"T[ií]tulo\s*:?", " ", antes)
+    antes = re.sub(r"\b(LIMA NORTE|LIMA ESTE|LIMA SUR|LIMA|CALLAO|CUSCO|PIURA|JUN[IÍ]N|"
+                   r"AYACUCHO|AREQUIPA|UCAYALI|TUMBES|LA LIBERTAD|LAMBAYEQUE|PUNO|"
+                   r"MADRE DE DIOS|HUAURA)\b", " ", antes)
+    antes = re.sub(r"\s+", " ", antes).strip(" .,-–—/:")
     # el epígrafe es corto; si quedó un párrafo, no era un epígrafe
     return antes if 8 <= len(antes) <= 140 else ""
 

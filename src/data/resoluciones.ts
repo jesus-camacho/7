@@ -698,6 +698,219 @@ export const resoluciones: Resolucion[] = [
     ],
   },
 
+  {
+    id: "rn-830-2019",
+    tipo: "Recurso de Nulidad",
+    institucion: "Corte Suprema",
+    numero: "Recurso de Nulidad N.\u00b0 830-2019/Lima Norte",
+    titulo:
+      "Posesi\u00f3n de estupefacientes con fines de tr\u00e1fico: prueba plural y concordante que desvirt\u00faa la presunci\u00f3n de inocencia",
+    sala: "Sala Penal Transitoria - Corte Suprema",
+    fecha: "2020-01-21",
+    citas: 0,
+    resumenRatioDecidendi:
+      "Seg\u00fan la sumilla de la propia Corte, existen medios de prueba plurales, coherentes, concordantes entre s\u00ed y suficientes que acreditan que el encausado ten\u00eda en posesi\u00f3n droga destinada al tr\u00e1fico il\u00edcito, lo que justifica la condena y desvirt\u00faa la presunci\u00f3n de inocencia.",
+    articulosAplicados: [
+      "Posesi\u00f3n de estupefacientes con fines de tr\u00e1fico il\u00edcito (C\u00f3digo Penal)",
+    ],
+    pdfUrl: "/documentos/rn-830-2019.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla",
+        tema: "Prueba suficiente en posesi\u00f3n para el tr\u00e1fico",
+        texto:
+          "Existen medios de prueba, plurales, coherentes, concordantes entre s\u00ed y suficientes, que dan cuenta de que el encausado ten\u00eda en posesi\u00f3n la droga destinada al tr\u00e1fico il\u00edcito, lo que justifica la condena en su contra y desvirt\u00faa la presunci\u00f3n de inocencia.",
+        verificado: true,
+      },
+    ],
+  },
+  {
+    id: "spe-205-2018-2",
+    tipo: "Resolucion",
+    institucion: "Corte Suprema",
+    numero: "Expediente N.\u00b0 205-2018-2 (Sala Penal Especial)",
+    titulo:
+      "Cese de prisi\u00f3n preventiva en pandemia: el juez debe procurarse de oficio la informaci\u00f3n necesaria",
+    sala: "Sala Penal Especial - Corte Suprema",
+    fecha: "",
+    citas: 0,
+    resumenRatioDecidendi:
+      "En el contexto del COVID-19, la Sala precis\u00f3 que el juez debe proveerse con especial diligencia de la informaci\u00f3n necesaria para contar con una base f\u00e1ctica suficiente al evaluar cada criterio del cese de la prisi\u00f3n preventiva, incluso cuando los sujetos procesales no la aporten, y que esa informaci\u00f3n debe comprender la naturaleza del delito y su impacto seg\u00fan los tratados internacionales.",
+    articulosAplicados: [
+      "Cese de la prisi\u00f3n preventiva (C\u00f3digo Procesal Penal)",
+      "Art. 139 inciso 5 - Constituci\u00f3n Pol\u00edtica del Per\u00fa (Motivaci\u00f3n)",
+    ],
+    pdfUrl: "/documentos/spe-205-2018-2.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla",
+        tema: "Deber de informaci\u00f3n del juez al evaluar el cese",
+        texto:
+          "En el contexto de la pandemia por el COVID-19, el juez, para resolver en t\u00e9rminos de racionalidad cognitiva, debe, con especial diligencia, proveerse de la informaci\u00f3n necesaria que le permita contar con una base f\u00e1ctica suficiente para evaluar cada uno de los criterios requeridos para el cese de la prisi\u00f3n preventiva \u2014cuando los sujetos procesales no lo hagan\u2014. La integralidad de esta informaci\u00f3n \u2014que debe incluir lo relativo a la naturaleza del delito y su impacto seg\u00fan tratados internacionales\u2014 va a permitir que su decisi\u00f3n est\u00e9 ajustada a derecho.",
+        verificado: true,
+      },
+    ],
+  },
+  {
+    id: "csn-00147-2016-168-5001",
+    tipo: "Resolucion",
+    institucion: "Corte Superior Nacional",
+    numero: "Expediente N.\u00b0 00147-2016-168-5001-JR-PE-04",
+    titulo:
+      "Prolongaci\u00f3n de prisi\u00f3n preventiva: la inconcurrencia sistem\u00e1tica de policías no configura especial dificultad",
+    sala: "2.\u00aa Sala Penal de Apelaciones - Corte Superior Nacional de Justicia Penal Especializada",
+    fecha: "2020-08-19",
+    citas: 0,
+    resumenRatioDecidendi:
+      "La Sala evalu\u00f3 un requerimiento de prolongaci\u00f3n de prisi\u00f3n preventiva sustentado en ciento ochenta y un actas de inconcurrencia, de las cuales ciento veintid\u00f3s correspond\u00edan a efectivos policiales. Aplicando el fundamento 16 del Acuerdo Plenario Extraordinario 1-2017/CIJ-116, que fija los presupuestos para declarar fundada la prolongaci\u00f3n, concluy\u00f3 que esa inconcurrencia sistem\u00e1tica no configura la especial dificultad que la medida exige.",
+    articulosAplicados: [
+      "Prolongaci\u00f3n de la prisi\u00f3n preventiva (C\u00f3digo Procesal Penal)",
+      "Acuerdo Plenario Extraordinario N.\u00b0 1-2017/CIJ-116, fundamento 16",
+    ],
+    pdfUrl: "/documentos/csn-00147-2016-168-5001.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla",
+        tema: "Qu\u00e9 no cuenta como especial dificultad",
+        texto:
+          "Inconcurrencia sistem\u00e1tica de efectivos policiales no configura especial dificultad. El MP rese\u00f1\u00f3 ciento ochenta y un actas de inconcurrencia, de las cuales ciento veintid\u00f3s corresponder\u00edan a inconcurrencias de efectivos de la PNP [...]. El fundamento 16 del ACUERDO PLENARIO EXTRAORDINARIO N.\u00ba 1-2017/CIJ-116, estableci\u00f3 los presupuestos para declarar fundado un RPPP: acreditar las circunstancias que importen una especial [dificultad].",
+        verificado: true,
+      },
+    ],
+  },
+  {
+    id: "rn-1248-2018",
+    tipo: "Recurso de Nulidad",
+    institucion: "Corte Suprema",
+    numero: "Recurso de Nulidad N.\u00b0 1248-2018/La Libertad",
+    titulo:
+      "La prueba por indicios no es un medio de prueba, sino un m\u00e9todo de apreciaci\u00f3n",
+    sala: "Sala Penal Permanente - Corte Suprema",
+    fecha: "2019-03-12",
+    citas: 0,
+    resumenRatioDecidendi:
+      "La Corte precis\u00f3 que lo esencial es que los hechos no se alteren y que los medios de prueba valorados hayan sido materia de debate judicial, y que corresponde al juez verificar los enunciados f\u00e1cticos de las partes. Estableci\u00f3 que la prueba por indicios no constituye un medio de prueba sino un m\u00e9todo de apreciaci\u00f3n de las pruebas. En el caso, la prueba fundamental fue directa \u2014el reconocimiento de la testigo v\u00edctima\u2014 y los elementos de corroboraci\u00f3n resultaron perif\u00e9ricos.",
+    articulosAplicados: [
+      "Art. 173 - C\u00f3digo Penal (Violaci\u00f3n sexual de menor de edad)",
+    ],
+    pdfUrl: "/documentos/rn-1248-2018.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla",
+        tema: "Naturaleza de la prueba indiciaria",
+        texto:
+          "Lo esencial es que los hechos no se alteren y que los medios de prueba objeto de valoraci\u00f3n fueron materia de debate judicial. Al Juez corresponde verificar las afirmaciones o enunciados f\u00e1cticos formulados por las partes. La prueba por indicios no es medio de prueba sino un m\u00e9todo de apreciaci\u00f3n de las pruebas.",
+        verificado: true,
+      },
+    ],
+  },
+  {
+    id: "cas-697-2017",
+    tipo: "Casacion",
+    institucion: "Corte Suprema",
+    numero: "Casaci\u00f3n N.\u00b0 697-2017/Puno",
+    titulo:
+      "Violaci\u00f3n en estado de inconsciencia: basta que sea parcial, y la ebriedad queda comprendida",
+    sala: "Corte Suprema",
+    fecha: "2018-04-24",
+    citas: 0,
+    resumenRatioDecidendi:
+      "La Corte estableci\u00f3 que el estado de inconsciencia exigido por el tipo penal no requiere ser total: lo relevante es la situaci\u00f3n transitoria por la cual la v\u00edctima carece de aptitud para percibir por sus \u00f3rganos corporales las impresiones provenientes de los objetos externos, de modo que la ebriedad queda comprendida dentro de ese alcance.",
+    articulosAplicados: [
+      "Violaci\u00f3n de persona en estado de inconsciencia (C\u00f3digo Penal)",
+    ],
+    pdfUrl: "/documentos/cas-697-2017.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla",
+        tema: "Inconsciencia total o parcial",
+        texto:
+          "La violaci\u00f3n de una persona en estado de inconsciencia puede darse cuando dicha condici\u00f3n sea total o parcial, pues lo relevante en el caso es la situaci\u00f3n transitoria por la cual el sujeto pasivo carece de aptitud para percibir, por medio de sus \u00f3rganos corporales, las impresiones provenientes de los objetos externos. La ebriedad queda comprendida dentro de este alcance.",
+        verificado: true,
+      },
+    ],
+  },
+  {
+    id: "cas-1111-2018",
+    tipo: "Casacion",
+    institucion: "Corte Suprema",
+    numero: "Casaci\u00f3n N.\u00b0 1111-2018/Ayacucho",
+    titulo:
+      "Acceso carnal como concepto normativo: basta la penetraci\u00f3n parcial",
+    sala: "Sala Penal Permanente - Corte Suprema",
+    fecha: "2020-08-12",
+    citas: 0,
+    resumenRatioDecidendi:
+      "La Corte precis\u00f3 que los hechos imputados deben examinarse no solo desde el material probatorio sino tambi\u00e9n en funci\u00f3n de la subsunci\u00f3n jur\u00eddico penal, pues el alcance exacto de los elementos del tipo determina el juicio hist\u00f3rico. Sobre el elemento objetivo, estableci\u00f3 que el acceso carnal es un concepto normativo: no se requiere penetraci\u00f3n \u00edntegra ni que se traspasen ciertos l\u00edmites anat\u00f3micos, bastando en la penetraci\u00f3n vaginal una introducci\u00f3n parcial.",
+    articulosAplicados: [
+      "Art. 170 - C\u00f3digo Penal (Violaci\u00f3n sexual)",
+      "Art. 429 - C\u00f3digo Procesal Penal (Causales de casaci\u00f3n)",
+    ],
+    pdfUrl: "/documentos/cas-1111-2018.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla, numeral 2",
+        tema: "El acceso carnal no exige penetraci\u00f3n \u00edntegra",
+        texto:
+          "El elemento objetivo del tipo penal de violaci\u00f3n sexual parte de entender que el acceso carnal es un concepto normativo. No es necesario para la consumaci\u00f3n una penetraci\u00f3n \u00edntegra o que haya traspasado ciertos l\u00edmites anat\u00f3micos; y, en el caso de penetraci\u00f3n vaginal, basta una introducci\u00f3n parcial.",
+        verificado: true,
+      },
+    ],
+  },
+  {
+    id: "cas-978-2018",
+    tipo: "Casacion",
+    institucion: "Corte Suprema",
+    numero: "Casaci\u00f3n N.\u00b0 978-2018/Arequipa",
+    titulo:
+      "Sin quiebre interpretativo no hay necesidad de desarrollar doctrina jurisprudencial",
+    sala: "Sala Penal Permanente - Corte Suprema",
+    fecha: "2018-12-12",
+    citas: 0,
+    resumenRatioDecidendi:
+      "La Corte rechaz\u00f3 el recurso al estimar que el tema propuesto por el recurrente no se fundament\u00f3 en un quiebre interpretativo que generara la necesidad de desarrollar doctrina jurisprudencial, que es lo que justifica el acceso excepcional a la casaci\u00f3n.",
+    articulosAplicados: [
+      "Art. 427 inciso 4 - C\u00f3digo Procesal Penal (Casaci\u00f3n excepcional)",
+    ],
+    pdfUrl: "/documentos/cas-978-2018.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla",
+        tema: "Cu\u00e1ndo no procede la casaci\u00f3n excepcional",
+        texto:
+          "Este Tribunal Supremo estima que el tema propuesto por el recurrente no se fundament\u00f3 en alg\u00fan quiebre interpretativo que genere necesidad para fundamentar el desarrollo de doctrina jurisprudencial, por lo que debe rechazarse el recurso interpuesto.",
+        verificado: true,
+      },
+    ],
+  },
+  {
+    id: "rn-1212-2019",
+    tipo: "Recurso de Nulidad",
+    institucion: "Corte Suprema",
+    numero: "Recurso de Nulidad N.\u00b0 1212-2019/Lima",
+    titulo:
+      "Coautor\u00eda ejecutiva por distribuci\u00f3n de roles y c\u00f3mputo del plazo para recurrir",
+    sala: "Sala Penal Permanente - Corte Suprema",
+    fecha: "2020-01-27",
+    citas: 0,
+    resumenRatioDecidendi:
+      "La Corte desestim\u00f3 el recurso defensivo centrado en el juicio hist\u00f3rico y precis\u00f3 que la intervenci\u00f3n delictiva de la procesada fue de coautora ejecutiva, pues realiz\u00f3 conductas materiales que confluyen en las exigencias de ambos tipos penales dentro de una distribuci\u00f3n de roles. Aclar\u00f3 adem\u00e1s que el recurso se formaliz\u00f3 en tiempo h\u00e1bil, pues en el c\u00f3mputo no se cuentan s\u00e1bados, domingos ni feriados.",
+    articulosAplicados: [
+      "Coautor\u00eda (C\u00f3digo Penal)",
+      "C\u00f3mputo de plazos para impugnar (C\u00f3digo de Procedimientos Penales)",
+    ],
+    pdfUrl: "/documentos/rn-1212-2019.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla",
+        tema: "Coautor\u00eda ejecutiva por reparto de roles",
+        texto:
+          "Es de aclarar que el tipo de intervenci\u00f3n delictiva es la de coautora ejecutiva, pues realiz\u00f3 conductas materiales que confluyen en las exigencias de ambos tipos penales en los marcos de una distribuci\u00f3n de roles.",
+        verificado: true,
+      },
+    ],
+  },
+
 ];
 
 /**
@@ -707,6 +920,48 @@ export const resoluciones: Resolucion[] = [
  * se puede explicar en una línea, no se dibuja.
  */
 const enlaces: GraphLink[] = [
+  {
+    source: "cas-978-2018",
+    target: "cas-1885-2023",
+    motivo:
+      "Ambas rechazan la casaci\u00f3n excepcional por falta de inter\u00e9s casacional: la discrepancia del recurrente no basta para desarrollar doctrina jurisprudencial.",
+  },
+  {
+    source: "cas-978-2018",
+    target: "cas-785-2018",
+    motivo:
+      "Requisitos de admisi\u00f3n del recurso de casaci\u00f3n y consecuencias de no satisfacerlos.",
+  },
+  {
+    source: "spe-205-2018-2",
+    target: "stc-0864-2026",
+    motivo:
+      "Motivaci\u00f3n exigible a las decisiones sobre prisi\u00f3n preventiva y la base f\u00e1ctica que el juez debe tener a la vista.",
+  },
+  {
+    source: "csn-00147-2016-168-5001",
+    target: "spe-205-2018-2",
+    motivo:
+      "Prisi\u00f3n preventiva en sus dos extremos: presupuestos para prolongarla y criterios para hacerla cesar.",
+  },
+  {
+    source: "rn-1248-2018",
+    target: "rn-690-2025",
+    motivo:
+      "Alcance y l\u00edmites de la prueba indiciaria en la condena penal.",
+  },
+  {
+    source: "cas-697-2017",
+    target: "cas-1111-2018",
+    motivo:
+      "Configuraci\u00f3n t\u00edpica de los delitos de violaci\u00f3n sexual: estado de inconsciencia y alcance del acceso carnal.",
+  },
+  {
+    source: "rn-1212-2019",
+    target: "col-54131-2020",
+    motivo:
+      "Intervenci\u00f3n delictiva en defraudaciones patrimoniales cometidas mediante reparto de roles.",
+  },
   {
     source: "cas-785-2018",
     target: "cas-1885-2023",
@@ -896,6 +1151,9 @@ const colorPorInstitucion = (inst: Resolucion["institucion"]) => {
       return "#e8e8ec";
     case "Corte Suprema de Colombia":
       return "#9fb4c7";
+    // Más apagado que la Corte Suprema: refleja la jerarquía del tribunal.
+    case "Corte Superior Nacional":
+      return "#bfc3c9";
   }
 };
 

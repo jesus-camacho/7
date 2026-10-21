@@ -4,14 +4,16 @@ export type TipoResolucion =
   | "Recurso de Nulidad"
   | "Apelacion"
   | "Habeas Corpus"
-  | "Sentencia CIDH";
+  | "Sentencia CIDH"
+  | "Resolucion";
 
 /** Tribunal del que proviene la resolución. */
 export type Institucion =
   | "Corte Suprema"
   | "Tribunal Constitucional"
   | "Corte IDH"
-  | "Corte Suprema de Colombia";
+  | "Corte Suprema de Colombia"
+  | "Corte Superior Nacional";
 
 /**
  * Fragmento citable de una resolución: texto literal con su referencia
