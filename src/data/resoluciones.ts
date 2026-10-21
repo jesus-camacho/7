@@ -195,6 +195,15 @@ export const resoluciones: Resolucion[] = [
       "Art. 1.1 - CADH (Obligación de respetar los derechos)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/seriec_20_esp.pdf",
+    fundamentos: [
+      {
+        referencia: "P\u00e1rr. 82 (cita la OC-8/87)",
+        tema: "El h\u00e1beas corpus no se suspende en estado de emergencia",
+        texto:
+          "[L]os procedimientos de h\u00e1beas corpus y de amparo son de aquellas garant\u00edas judiciales indispensables para la protecci\u00f3n de varios derechos cuya suspensi\u00f3n est\u00e1 vedada por el art\u00edculo 27.2 y sirven, adem\u00e1s, para preservar la legalidad de una sociedad democr\u00e1tica.",
+        verificado: true,
+      },
+    ],
   },
   {
     id: "cidh-loayza-tamayo-1997",
@@ -255,6 +264,22 @@ export const resoluciones: Resolucion[] = [
       "Art. 1.1 - CADH (Obligación de respetar los derechos)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/Seriec_68_esp.pdf",
+    fundamentos: [
+      {
+        referencia: "P\u00e1rr. 117",
+        tema: "La jurisdicci\u00f3n penal militar es restrictiva y excepcional",
+        texto:
+          "En un Estado democr\u00e1tico de Derecho la jurisdicci\u00f3n penal militar ha de tener un alcance restrictivo y excepcional y estar encaminada a la protecci\u00f3n de intereses jur\u00eddicos especiales, vinculados con las funciones que la ley asigna a las fuerzas militares. As\u00ed, debe estar excluido del \u00e1mbito de la jurisdicci\u00f3n militar el juzgamiento de civiles y s\u00f3lo debe juzgar a militares por la comisi\u00f3n de delitos o faltas que por su propia naturaleza atenten contra bienes jur\u00eddicos propios del orden militar.",
+        verificado: true,
+      },
+      {
+        referencia: "P\u00e1rr. 118",
+        tema: "El Front\u00f3n: fueron delitos comunes, no militares",
+        texto:
+          "En el presente caso, los militares encargados de la debelaci\u00f3n del mot\u00edn ocurrido en el penal El Front\u00f3n hicieron un uso desproporcionado de la fuerza que excedi\u00f3 en mucho los l\u00edmites de su funci\u00f3n, lo que provoc\u00f3 la muerte de un gran n\u00famero de reclusos. Por lo tanto, los actos que llevaron a este desenlace no pueden ser considerados delitos militares, sino delitos comunes, por lo que la investigaci\u00f3n y sanci\u00f3n de los mismos debi\u00f3 haber reca\u00eddo en la justicia ordinaria.",
+        verificado: true,
+      },
+    ],
   },
   {
     id: "cidh-cantoral-benavides-2000",
@@ -294,6 +319,15 @@ export const resoluciones: Resolucion[] = [
       "Art. 8 y 25 - CADH (Garantías judiciales y protección judicial)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/Seriec_75_esp.pdf",
+    fundamentos: [
+      {
+        referencia: "P\u00e1rr. 41",
+        tema: "Inadmisibilidad de amnist\u00eda y prescripci\u00f3n",
+        texto:
+          "Esta Corte considera que son inadmisibles las disposiciones de amnist\u00eda, las disposiciones de prescripci\u00f3n y el establecimiento de excluyentes de responsabilidad que pretendan impedir la investigaci\u00f3n y sanci\u00f3n de los responsables de las violaciones graves de los derechos humanos tales como la tortura, las ejecuciones sumarias, extralegales o arbitrarias y las desapariciones forzadas, todas ellas prohibidas por contravenir derechos inderogables reconocidos por el Derecho Internacional de los Derechos Humanos.",
+        verificado: true,
+      },
+    ],
   },
   {
     id: "cidh-la-cantuta-2006",
@@ -392,6 +426,15 @@ export const resoluciones: Resolucion[] = [
       "Art. 1.1 - CADH (Obligación de respetar los derechos)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/seriec_292_esp.pdf",
+    fundamentos: [
+      {
+        referencia: "P\u00e1rr. 263",
+        tema: "La fuerza letal solo cuando sea absolutamente necesaria",
+        texto:
+          "[L]a Corte ha sostenido que el uso excepcional de la fuerza letal deber\u00e1 estar formulado por ley, y ser interpretado restrictivamente de manera que sea minimizado en toda circunstancia, no siendo m\u00e1s que el \u201cabsolutamente necesario\u201d en relaci\u00f3n con la fuerza o amenaza que se pretende repeler.",
+        verificado: true,
+      },
+    ],
   },
   {
     id: "cidh-quispialaya-2015",
@@ -431,6 +474,15 @@ export const resoluciones: Resolucion[] = [
       "Art. 1.1 - CADH (Obligación de respetar los derechos)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/seriec_331_esp.pdf",
+    fundamentos: [
+      {
+        referencia: "P\u00e1rr. 138",
+        tema: "La carga de la prueba recae en quien acusa",
+        texto:
+          "[E]l Tribunal reitera que \u201cla demostraci\u00f3n fehaciente de la culpabilidad constituye un requisito indispensable para la sanci\u00f3n penal, de modo que la carga de la prueba recae en la parte acusadora y no en el acusado\u201d. En este sentido, \u201cel acusado no debe demostrar que no ha cometido el delito que se le atribuye, ya que el onus probandi corresponde a quien acusa\u201d y cualquier duda debe ser usada en beneficio del acusado.",
+        verificado: true,
+      },
+    ],
   },
 ];
 
