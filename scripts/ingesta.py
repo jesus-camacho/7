@@ -263,6 +263,30 @@ def extraer_sumilla(t: str) -> str:
     return cabeza if len(cabeza) > 120 else ""
 
 
+def extraer_epigrafe(t: str) -> str:
+    """
+    El epígrafe es el título temático que el propio tribunal pone entre el
+    número de expediente y la sumilla ("Prueba indiciaria y valoración
+    probatoria", "Determinación de la pena"). Es del documento, no una
+    interpretación nuestra.
+    """
+    plano = re.sub(r"\s+", " ", t[:4000])
+    m = re.search(r"(?:sumilla|SUMILLA)\s*[.:]", plano)
+    if not m:
+        return ""
+    antes = plano[:m.start()]
+    # quitar membrete, número y ponente
+    antes = re.sub(
+        r"CORTE SUPREMA|CORTE SUPERIOR[\w ]*|SALA PENAL[\w ]*|DE JUSTICIA|"
+        r"DE LA REP[UÚ]BLICA|PONENTE\s*:?[A-ZÁÉÍÓÚ\s]+|RECURSO[\w ]*|"
+        r"CASACI[OÓ]N|APELACI[OÓ]N|EXPEDIENTE[\w .:°º-]*|N\.?[°º]?\s*[\d\-/]+|"
+        r"R\.? ?N\.?|Con formato:[^.]*\.?",
+        " ", antes)
+    antes = re.sub(r"\s+", " ", antes).strip(" .,-–—/")
+    # el epígrafe es corto; si quedó un párrafo, no era un epígrafe
+    return antes if 8 <= len(antes) <= 140 else ""
+
+
 PATRON_FUNDAMENTO = re.compile(
     r"(?:^|\n)\s*(?:"
     r"(\d{1,2}\.\d{1,2})\.\s|"                       # 2.9.
@@ -349,6 +373,7 @@ def procesar(pdf: Path) -> dict:
         "clase": "jurisprudencia",
         "archivo": pdf.name,
         "fecha": extraer_fecha(t),
+        "epigrafe": extraer_epigrafe(t),
         "sumilla": extraer_sumilla(t),
         "articulosAplicados": extraer_articulos(t),
         "fundamentos": extraer_fundamentos(t),
