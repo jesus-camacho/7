@@ -40,15 +40,29 @@ def sin_tildes(t: str) -> str:
 
 
 def texto_de(pdf: Path) -> str:
-    """Extrae el texto. El modo 'layout' evita que se partan las palabras."""
+    """
+    Extrae el texto. El modo 'layout' evita que se partan las palabras en los
+    PDF nativos, pero devuelve vacío en los que llevan capa de OCR, porque
+    ese texto invisible no tiene información de maquetación. Por eso, si
+    'layout' no da nada, se reintenta con la extracción simple.
+    """
     lector = pypdf.PdfReader(str(pdf))
-    partes = []
-    for pagina in lector.pages:
-        try:
-            partes.append(pagina.extract_text(extraction_mode="layout") or "")
-        except Exception:
-            partes.append(pagina.extract_text() or "")
-    t = "\n".join(partes)
+
+    def extraer(modo: str | None) -> str:
+        partes = []
+        for pagina in lector.pages:
+            try:
+                partes.append(
+                    (pagina.extract_text(extraction_mode=modo) if modo
+                     else pagina.extract_text()) or ""
+                )
+            except Exception:
+                partes.append("")
+        return "\n".join(partes)
+
+    t = extraer("layout")
+    if len(t.strip()) < 200:
+        t = extraer(None)
     return re.sub(r"[ \t]+", " ", t)
 
 
@@ -113,11 +127,14 @@ def extraer_fecha(t: str) -> str:
 
 # El membrete suele intercalar "DE LA REPUBLICA" entre el tipo y el número.
 INTERMEDIO = r"(?:\s+de\s+la\s+rep[uú]blica)?"
+# El OCR suele leer el símbolo de grado como ? ” " ' ´ ~ o ^, así que el
+# patrón del número acepta cualquiera de esos signos.
+GRADO = r"[.\s°º”“\"'?¿´`~^*,]*"
 TIPOS = [
-    (r"acuerdo\s+plenario" + INTERMEDIO + r"\s*n[.\s°º]*\s*(\d+)\s*-\s*(\d{4})", "Acuerdo Plenario", "ap"),
-    (r"casaci[oó]n" + INTERMEDIO + r"\s*n[.\s°º]*\s*(\d+)\s*-\s*(\d{4})", "Casacion", "cas"),
-    (r"(?:recurso\s+(?:de\s+)?nulidad|r\.?\s*n\.?)" + INTERMEDIO + r"\s*n[.\s°º]*\s*(\d+)\s*-\s*(\d{4})", "Recurso de Nulidad", "rn"),
-    (r"apelaci[oó]n" + INTERMEDIO + r"\s*n[.\s°º]*\s*(\d+)\s*-\s*(\d{4})", "Apelacion", "apl"),
+    (r"acuerdo\s+plenario" + INTERMEDIO + r"\s*n" + GRADO + r"\s*(\d+)\s*-\s*(\d{4})", "Acuerdo Plenario", "ap"),
+    (r"casaci[oó]n" + INTERMEDIO + r"\s*n" + GRADO + r"\s*(\d+)\s*-\s*(\d{4})", "Casacion", "cas"),
+    (r"(?:recurso\s+(?:de\s+)?nulidad|r\.?\s*n\.?)" + INTERMEDIO + r"\s*n" + GRADO + r"\s*(\d+)\s*-\s*(\d{4})", "Recurso de Nulidad", "rn"),
+    (r"apelaci[oó]n" + INTERMEDIO + r"\s*n" + GRADO + r"\s*(\d+)\s*-\s*(\d{4})", "Apelacion", "apl"),
 ]
 
 

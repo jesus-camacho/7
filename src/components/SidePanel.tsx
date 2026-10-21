@@ -155,11 +155,11 @@ export default function SidePanel({
                             {copiado === i ? <Check size={12} /> : <Copy size={12} />}
                             {copiado === i ? "Cita copiada" : "Copiar cita"}
                           </button>
-                          {f.verificado && (
-                            <span className="text-[10px] text-ink-400">
-                              Cotejado con el PDF
-                            </span>
-                          )}
+                          <span className="text-[10px] text-ink-400">
+                            {f.verificado
+                              ? "Cotejado con el PDF"
+                              : "Texto reconocido por OCR: coteja antes de citar"}
+                          </span>
                         </div>
                       </li>
                     ))}
