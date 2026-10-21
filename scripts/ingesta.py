@@ -116,7 +116,7 @@ INTERMEDIO = r"(?:\s+de\s+la\s+rep[uú]blica)?"
 TIPOS = [
     (r"acuerdo\s+plenario" + INTERMEDIO + r"\s*n[.\s°º]*\s*(\d+)\s*-\s*(\d{4})", "Acuerdo Plenario", "ap"),
     (r"casaci[oó]n" + INTERMEDIO + r"\s*n[.\s°º]*\s*(\d+)\s*-\s*(\d{4})", "Casacion", "cas"),
-    (r"recurso\s+de\s+nulidad" + INTERMEDIO + r"\s*n[.\s°º]*\s*(\d+)\s*-\s*(\d{4})", "Recurso de Nulidad", "rn"),
+    (r"(?:recurso\s+(?:de\s+)?nulidad|r\.?\s*n\.?)" + INTERMEDIO + r"\s*n[.\s°º]*\s*(\d+)\s*-\s*(\d{4})", "Recurso de Nulidad", "rn"),
     (r"apelaci[oó]n" + INTERMEDIO + r"\s*n[.\s°º]*\s*(\d+)\s*-\s*(\d{4})", "Apelacion", "apl"),
 ]
 
@@ -171,18 +171,44 @@ def identificar(t: str) -> dict:
             "sala": "Corte Interamericana de Derechos Humanos",
         }
 
-    # Corte Superior Nacional: se identifica por expediente, no por número
-    # correlativo de resolución.
-    if re.search(r"corte\s+superior\s+nacional", cabecera, re.I):
+    # Corte Suprema, Sala Penal Especial: se numera por expediente.
+    if re.search(r"sala\s+penal\s+especial", cabecera, re.I):
         m_exp = re.search(r"expediente\s*n[.\s°º]*\s*:?\s*([\d\-]+)", cabecera, re.I)
+        if m_exp:
+            exp = m_exp.group(1).strip("-")
+            return {
+                "id": "spe-" + exp.replace("-", "-"),
+                "tipo": "Resolucion",
+                "institucion": "Corte Suprema",
+                "numero": f"Expediente N.° {exp}",
+                "sala": "Sala Penal Especial - Corte Suprema",
+            }
+
+    # Corte Suprema de Justicia de Colombia: se cita por radicación.
+    m_rad = re.search(r"radicaci[oó]n\s*n[.\s°º]*\s*(\d{4,6})", cabecera, re.I)
+    if m_rad and re.search(r"bogot[aá]|sala\s+de\s+casaci[oó]n\s+penal", t[:6000], re.I):
+        m_anio = re.search(r"\b(20\d{2})\b", cabecera)
+        return {
+            "id": f"col-{m_rad.group(1)}" + (f"-{m_anio.group(1)}" if m_anio else ""),
+            "tipo": "Casacion",
+            "institucion": "Corte Suprema de Colombia",
+            "numero": f"Casación N.° {m_rad.group(1)} - Colombia",
+            "sala": "Sala de Casación Penal - Corte Suprema de Justicia de Colombia",
+        }
+
+    # Salas nacionales (crimen organizado, corrupción): se numeran por expediente.
+    if re.search(r"corte\s+superior\s+nacional|sala\s+penal\s+de\s+apelaciones\s+nacional",
+                 cabecera, re.I):
+        m_exp = re.search(r"expediente\s*n?[.\s°º]*\s*:?\s*([\d\-]+)", cabecera, re.I)
         exp = m_exp.group(1) if m_exp else ""
-        sala = re.search(r"(\d)\.?[ªa]\s+sala\s+penal\s+de\s+apelaciones", cabecera, re.I)
+        sala = re.search(r"(\d|primera|segunda|tercera)\.?[ªa]?\s+sala\s+penal\s+de\s+apelaciones",
+                         cabecera, re.I)
         return {
             "id": "csn-" + re.sub(r"[^0-9]+", "-", exp).strip("-") if exp else "",
             "tipo": "Resolucion",
             "institucion": "Corte Superior Nacional",
             "numero": f"Expediente N.° {exp}" if exp else "Corte Superior Nacional",
-            "sala": (f"{sala.group(1)}.ª Sala Penal de Apelaciones - " if sala else "")
+            "sala": (f"{sala.group(1).capitalize()} Sala Penal de Apelaciones - " if sala else "")
                     + "Corte Superior Nacional de Justicia Penal Especializada",
         }
 
