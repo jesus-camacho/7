@@ -12,6 +12,7 @@ export default function App() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
+  const [previewId, setPreviewId] = useState<string | null>(null);
   const graphRef = useRef<GraphVisualizerHandle>(null);
 
   const results = useMemo(() => {
@@ -20,7 +21,12 @@ export default function App() {
     return graphData.nodes.filter(
       (n) =>
         n.titulo.toLowerCase().includes(q) ||
-        n.numero.toLowerCase().includes(q)
+        n.numero.toLowerCase().includes(q) ||
+        (n.fundamentos ?? []).some(
+          (f) =>
+            f.tema.toLowerCase().includes(q) ||
+            f.texto.toLowerCase().includes(q)
+        )
     );
   }, [query]);
 
@@ -42,6 +48,7 @@ export default function App() {
     setPanelOpen(true);
     setQuery("");
     setSearchFocused(false);
+    setPreviewId(null);
     graphRef.current?.focusNode(node.id);
   };
 
@@ -56,6 +63,7 @@ export default function App() {
         ref={graphRef}
         data={graphData}
         selectedId={panelOpen ? selectedNode?.id ?? null : null}
+        previewId={previewId}
         onSelectNode={selectNode}
       />
 
@@ -83,6 +91,14 @@ export default function App() {
                 <li key={r.id}>
                   <button
                     onMouseDown={() => selectNode(r)}
+                    onMouseEnter={() => {
+                      setPreviewId(r.id);
+                      graphRef.current?.focusNode(r.id);
+                    }}
+                    onFocus={() => {
+                      setPreviewId(r.id);
+                      graphRef.current?.focusNode(r.id);
+                    }}
                     className="flex w-full flex-col gap-0.5 px-4 py-2.5 text-left transition-colors hover:bg-white/10"
                   >
                     <span className="text-title text-sm text-white">{r.titulo}</span>

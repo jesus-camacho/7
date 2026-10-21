@@ -1,5 +1,6 @@
-import { FileText, Gavel, Globe2, Scale, ScrollText, ShieldCheck, X } from "lucide-react";
-import { GraphNode, TipoResolucion } from "../types";
+import { useState } from "react";
+import { Check, Copy, FileText, Gavel, Globe2, Scale, ScrollText, ShieldCheck, X } from "lucide-react";
+import { Fundamento, GraphNode, TipoResolucion } from "../types";
 
 export interface Conexion {
   nodo: GraphNode;
@@ -39,6 +40,30 @@ export default function SidePanel({
 }: SidePanelProps) {
   const BadgeIcon = node ? BADGE_ICON[node.tipo] : null;
   const esExterno = node ? node.pdfUrl.startsWith("http") : false;
+  const [copiado, setCopiado] = useState<number | null>(null);
+
+  /** Cita lista para pegar en un escrito o leer en audiencia. */
+  const armarCita = (f: Fundamento) =>
+    `\u00ab${f.texto}\u00bb (${node?.numero ?? ""}, ${f.referencia}).`;
+
+  const copiarCita = async (f: Fundamento, i: number) => {
+    try {
+      await navigator.clipboard.writeText(armarCita(f));
+      setCopiado(i);
+      setTimeout(() => setCopiado(null), 2000);
+    } catch {
+      // Si el navegador niega el portapapeles, se selecciona el texto
+      // para que el usuario lo copie a mano.
+      const el = document.getElementById(`cita-${i}`);
+      if (el) {
+        const rango = document.createRange();
+        rango.selectNodeContents(el);
+        const sel = window.getSelection();
+        sel?.removeAllRanges();
+        sel?.addRange(rango);
+      }
+    }
+  };
 
   return (
     <>
@@ -93,6 +118,53 @@ export default function SidePanel({
                 <p className="mt-2.5 text-sm leading-relaxed text-ink-700">
                   {node.resumenRatioDecidendi}
                 </p>
+              </div>
+
+              <div className="mt-7">
+                <h3 className="text-label text-ink-500">Fundamentos para citar</h3>
+                {node.fundamentos && node.fundamentos.length > 0 ? (
+                  <ul className="mt-2.5 space-y-3">
+                    {node.fundamentos.map((f, i) => (
+                      <li
+                        key={f.referencia}
+                        className="rounded-lg border border-surface-300/60 bg-surface-0/60 p-3"
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <span className="text-sm text-ink-900">{f.tema}</span>
+                          <span className="shrink-0 rounded bg-surface-200 px-2 py-0.5 text-[10px] uppercase tracking-wide text-ink-500">
+                            {f.referencia}
+                          </span>
+                        </div>
+                        <blockquote
+                          id={`cita-${i}`}
+                          className="mt-2 border-l-2 border-gold-500/50 pl-3 text-sm italic leading-relaxed text-ink-700"
+                        >
+                          {f.texto}
+                        </blockquote>
+                        <div className="mt-2.5 flex items-center justify-between gap-3">
+                          <button
+                            onClick={() => copiarCita(f, i)}
+                            className="inline-flex items-center gap-1.5 rounded-md bg-surface-200 px-2.5 py-1.5 text-xs text-ink-700 transition-colors hover:bg-surface-300 hover:text-ink-900"
+                          >
+                            {copiado === i ? <Check size={12} /> : <Copy size={12} />}
+                            {copiado === i ? "Cita copiada" : "Copiar cita"}
+                          </button>
+                          {f.verificado && (
+                            <span className="text-[10px] text-ink-400">
+                              Cotejado con el PDF
+                            </span>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="mt-2.5 text-sm leading-relaxed text-ink-500">
+                    Todavía no hay citas literales cargadas para esta sentencia.
+                    Se agregan solo después de cotejarlas contra el PDF oficial,
+                    nunca de memoria.
+                  </p>
+                )}
               </div>
 
               <div className="mt-7">

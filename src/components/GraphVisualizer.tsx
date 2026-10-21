@@ -12,6 +12,8 @@ import { GraphData, GraphNode } from "../types";
 interface GraphVisualizerProps {
   data: GraphData;
   selectedId: string | null;
+  /** Resolución recorrida en el buscador: se centra y resalta sin abrir el panel. */
+  previewId?: string | null;
   onSelectNode: (node: GraphNode) => void;
 }
 
@@ -78,7 +80,7 @@ const withAlpha = (hex: string, alpha: number) => {
 };
 
 const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
-  ({ data, selectedId, onSelectNode }, ref) => {
+  ({ data, selectedId, previewId = null, onSelectNode }, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [dimensions, setDimensions] = useState({ width: 900, height: 700 });
@@ -114,6 +116,7 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
     const proyectado = useRef(new Map<string, { sx: number; sy: number; z: number; r: number }>());
     const hoverRef = useRef<string | null>(null);
     const selectedRef = useRef<string | null>(null);
+    const previewRef = useRef<string | null>(null);
 
     useEffect(() => {
       hoverRef.current = hoverId;
@@ -121,6 +124,9 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
     useEffect(() => {
       selectedRef.current = selectedId;
     }, [selectedId]);
+    useEffect(() => {
+      previewRef.current = previewId;
+    }, [previewId]);
 
     useEffect(() => {
       const el = containerRef.current;
@@ -283,7 +289,7 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
         // --- Proyección de nodos ---
         const proj = proyectado.current;
         proj.clear();
-        const activo = hoverRef.current ?? selectedRef.current;
+        const activo = hoverRef.current ?? previewRef.current ?? selectedRef.current;
         const vecinos = new Set<string>();
         if (activo) {
           for (const l of data.links) {
@@ -371,7 +377,10 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
           const p = proj.get(n.id);
           if (!p) continue;
           const prof = (p.z + 1) / 2;
-          const esActivo = n.id === selectedRef.current || n.id === hoverRef.current;
+          const esActivo =
+            n.id === selectedRef.current ||
+            n.id === hoverRef.current ||
+            n.id === previewRef.current;
           const esVecino = vecinos.has(n.id);
           const alpha = esActivo ? 1 : (0.28 + 0.62 * prof) * (activo && !esVecino ? 0.55 : 1);
 

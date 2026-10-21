@@ -11,6 +11,19 @@ export type Institucion =
   | "Tribunal Constitucional"
   | "Corte IDH";
 
+/**
+ * Fragmento citable de una resolución: texto literal con su referencia
+ * exacta, para poder invocarlo en audiencia o en un escrito.
+ * `verificado` es true solo cuando el texto fue cotejado contra el PDF
+ * oficial del documento; nunca se transcribe de memoria.
+ */
+export interface Fundamento {
+  referencia: string;
+  tema: string;
+  texto: string;
+  verificado: boolean;
+}
+
 export interface Resolucion {
   id: string;
   tipo: TipoResolucion;
@@ -23,6 +36,7 @@ export interface Resolucion {
   resumenRatioDecidendi: string;
   articulosAplicados: string[];
   pdfUrl: string;
+  fundamentos?: Fundamento[];
 }
 
 export interface GraphNode extends Resolucion {

@@ -34,6 +34,22 @@ export const resoluciones: Resolucion[] = [
       "Art. 103 - Constitución Política del Perú",
     ],
     pdfUrl: "/documentos/rn-845-2025.pdf",
+    fundamentos: [
+      {
+        referencia: "Fundamento 2.9",
+        tema: "La conversión de pena es subsidiaria",
+        texto:
+          "En ese sentido, la conversión de pena responde a un esquema subsidiario, dado que procede en los casos donde no resulta procedente la condena condicional o la reserva del fallo condenatorio.",
+        verificado: true,
+      },
+      {
+        referencia: "Fundamento 2.8",
+        tema: "Requisitos para que proceda la conversión",
+        texto:
+          "De conformidad con lo establecido en el artículo 52 del CP, para que proceda la conversión de la pena se requiere: (i) Que la pena impuesta en la sentencia no sea superior a 2 o 5 años de privación de libertad; y, (ii) como requisito especial, que en el caso concreto no sea posible aplicar la condena condicional o la reserva del fallo condenatorio. Dicho criterio constituye doctrina jurisprudencial vinculante.",
+        verificado: true,
+      },
+    ],
   },
   {
     id: "rn-690-2025",
@@ -53,6 +69,15 @@ export const resoluciones: Resolucion[] = [
       "Art. 280 - Código de Procedimientos Penales (Unidad del expediente)",
     ],
     pdfUrl: "/documentos/rn-690-2025.pdf",
+    fundamentos: [
+      {
+        referencia: "Fundamento 8.12",
+        tema: "La pericia de absorción atómica es indicativa, no declarativa",
+        texto:
+          "[E]s necesario precisar que la prueba de absorción atómica no es \u201cdeclarativa\u201d sino \u201cindicativa\u201d (ver Apelación 374-2024/Cajamarca, fundamento 6.23). La presencia de estos metales en la mano de una víctima puede obedecer a tres escenarios: i) que haya disparado, ii) que haya intentado cubrirse frente al disparo (defensa) o iii) que se haya encontrado en un radio de acción cercano (zona de contaminación) al momento de la deflagración del arma accionada por un tercero.",
+        verificado: true,
+      },
+    ],
   },
   {
     id: "cas-2308-2022",
@@ -73,6 +98,22 @@ export const resoluciones: Resolucion[] = [
       "Art. 429 inciso 1 - Código Procesal Penal",
     ],
     pdfUrl: "/documentos/cas-2308-2022.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla, numeral I",
+        tema: "Cuándo hay defensa pública ineficaz",
+        texto:
+          "Para configurar una afectación del derecho de defensa y, en estricto, para que se materialice una defensa ineficaz por parte de la defensa pública, no basta meramente que no se haya propuesto prueba de descargo alguno a favor de la procesada, sino que, para la materialización de una vulneración de ese nivel, se debe mirar u observar integralmente la actuación del letrado a lo largo de todo el curso procesal, en particular en el plenario de juzgamiento.",
+        verificado: true,
+      },
+      {
+        referencia: "Fundamento vigesimoprimero",
+        tema: "La inocencia no requiere probanza",
+        texto:
+          "Hemos de estar atentos a que el imputado de un delito no está en la obligación de presentar prueba alguna, porque la inocencia no tiene que acreditarse, se presume en un Estado constitucional de derecho; a menos que, en uso de su derecho de tutela jurisdiccional efectiva, en su dimensión del derecho al contradictorio, postule una tesis de alegación, por supuesto, en línea con la inocencia constitucional.",
+        verificado: true,
+      },
+    ],
   },
   {
     id: "cas-1885-2023",
@@ -93,6 +134,15 @@ export const resoluciones: Resolucion[] = [
       "Art. 428 inciso 1 literal d) - Código Procesal Penal (Doble conforme)",
     ],
     pdfUrl: "/documentos/cas-1885-2023.pdf",
+    fundamentos: [
+      {
+        referencia: "Fundamento 3.3",
+        tema: "El doble conforme impide la casación",
+        texto:
+          "[L]a decisión desestimatoria de la excepción deducida fue confirmada por el auto de vista que es objeto del recurso de casación; por lo tanto, bajo el principio del doble conforme, nos encontramos ante una causal de inadmisibilidad liminar prescrita en el literal d) del numeral 1 del artículo 428 del CPP, por lo que el recurso resulta desestimable.",
+        verificado: true,
+      },
+    ],
   },
   {
     id: "rn-977-2025",
@@ -112,6 +162,15 @@ export const resoluciones: Resolucion[] = [
       "Art. 58 y 59 - Código Penal (Reglas de conducta)",
     ],
     pdfUrl: "/documentos/rn-977-2025.pdf",
+    fundamentos: [
+      {
+        referencia: "Fundamento 10",
+        tema: "Motivación cualificada del pronóstico de conducta futura",
+        texto:
+          "El citado dispositivo exige una motivación cualificada, respecto al pronóstico favorable de la conducta futura del sentenciado, que deberá ser consecuencia del análisis de la naturaleza y modalidad del hecho punible, así como del comportamiento procesal y la personalidad del agente, todo lo cual deberá llevar a inferir al juzgador que el condenado no volverá a cometer un nuevo delito.",
+        verificado: true,
+      },
+    ],
   },
 
   // ---------------------------------------------------------------------

@@ -1,0 +1,71 @@
+name: Descargar sentencias Corte IDH
+
+# Trae los PDF oficiales de corteidh.or.cr y los commitea en el repo.
+# Corre en la nube porque el entorno de desarrollo no alcanza ese dominio,
+# y sin los PDF no se pueden cotejar las citas literales de cada sentencia.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  descargar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Descargar los PDF
+        run: |
+          mkdir -p public/documentos/cidh
+          descargar() {
+            local id="$1" url="$2" destino="public/documentos/cidh/$1.pdf"
+            if [ -s "$destino" ]; then echo "ya existe: $id"; return 0; fi
+            echo "descargando $id ..."
+            if curl -sS -fL --retry 3 --retry-delay 2 --max-time 120 \
+                 -A "Mozilla/5.0 (compatible; jurisprudencia-portal/1.0)" \
+                 -o "$destino" "$url"; then
+              # descartar lo que no sea realmente un PDF
+              if head -c 4 "$destino" | grep -q '%PDF'; then
+                echo "  ok ($(du -h "$destino" | cut -f1))"
+              else
+                echo "  NO es un PDF, se descarta"; rm -f "$destino"
+              fi
+            else
+              echo "  fallo la descarga"; rm -f "$destino"
+            fi
+            sleep 1
+          }
+
+          B=https://www.corteidh.or.cr/docs/casos/articulos
+          descargar cidh-neira-alegria-1995     "$B/seriec_20_esp.pdf"
+          descargar cidh-loayza-tamayo-1997     "$B/seriec_33_esp.pdf"
+          descargar cidh-durand-ugarte-2000     "$B/Seriec_68_esp.pdf"
+          descargar cidh-cantoral-benavides-2000 "$B/seriec_69_esp.pdf"
+          descargar cidh-barrios-altos-2001     "$B/Seriec_75_esp.pdf"
+          descargar cidh-la-cantuta-2006        "$B/seriec_162_esp.pdf"
+          descargar cidh-anzualdo-castro-2009   "$B/seriec_202_esp.pdf"
+          descargar cidh-j-vs-peru-2013         "$B/seriec_275_esp.pdf"
+          descargar cidh-espinoza-gonzales-2014 "$B/seriec_289_esp.pdf"
+          descargar cidh-cruz-sanchez-2015      "$B/seriec_292_esp.pdf"
+          descargar cidh-quispialaya-2015       "$B/seriec_308_esp.pdf"
+          descargar cidh-zegarra-marin-2017     "$B/seriec_331_esp.pdf"
+          descargar cidh-castillo-petruzzi-1999 "$B/seriec_52_esp.pdf"
+
+          echo "=== resultado ==="
+          ls -la public/documentos/cidh/ || true
+
+      - name: Commitear los PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/documentos/cidh/
+          if git diff --cached --quiet; then
+            echo "No se descargo ningun PDF nuevo."
+            exit 0
+          fi
+          n=$(git diff --cached --name-only | grep -c '\.pdf$' || true)
+          git commit -m "Descarga de $n sentencias de la Corte IDH desde corteidh.or.cr"
+          git push
