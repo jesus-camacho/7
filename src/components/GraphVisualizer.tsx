@@ -483,11 +483,90 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
       objetivo.current = null;
     };
 
+    // ---------------------------- gestos táctiles ----------------------------
+    // Sin esto el globo no se puede girar ni acercar en un teléfono: los
+    // eventos de ratón no llegan. Un dedo rota, dos pellizcan para el zoom,
+    // y un toque sin desplazamiento selecciona la resolución.
+    const tacto = useRef<{
+      x: number;
+      y: number;
+      movido: boolean;
+      separacion: number | null;
+    } | null>(null);
+
+    const puntoEn = (e: React.TouchEvent<HTMLCanvasElement>, i = 0) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const t = e.touches[i] ?? e.changedTouches[i];
+      return { x: t.clientX - rect.left, y: t.clientY - rect.top };
+    };
+
+    const separacionEntreDedos = (e: React.TouchEvent<HTMLCanvasElement>) => {
+      if (e.touches.length < 2) return null;
+      return Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+    };
+
+    const onTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
+      const p = puntoEn(e);
+      tacto.current = {
+        x: p.x,
+        y: p.y,
+        movido: false,
+        separacion: separacionEntreDedos(e),
+      };
+      autoRotar.current = false;
+      objetivo.current = null;
+    };
+
+    const onTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+      if (!tacto.current) return;
+
+      const separacion = separacionEntreDedos(e);
+      if (separacion !== null && tacto.current.separacion) {
+        const factor = separacion / tacto.current.separacion;
+        cam.current.zoom = Math.max(0.6, Math.min(3, cam.current.zoom * factor));
+        tacto.current.separacion = separacion;
+        tacto.current.movido = true;
+        return;
+      }
+
+      const p = puntoEn(e);
+      const dx = p.x - tacto.current.x;
+      const dy = p.y - tacto.current.y;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) tacto.current.movido = true;
+      cam.current.yaw += dx * 0.006;
+      cam.current.pitch = Math.max(
+        -Math.PI / 2 + 0.1,
+        Math.min(Math.PI / 2 - 0.1, cam.current.pitch + dy * 0.006)
+      );
+      tacto.current.x = p.x;
+      tacto.current.y = p.y;
+    };
+
+    const onTouchEnd = (e: React.TouchEvent<HTMLCanvasElement>) => {
+      const gesto = tacto.current;
+      tacto.current = null;
+      if (!gesto || gesto.movido) return;
+      const rect = e.currentTarget.getBoundingClientRect();
+      const t = e.changedTouches[0];
+      if (!t) return;
+      const n = nodoEn(t.clientX - rect.left, t.clientY - rect.top);
+      if (n) onSelectNode(n);
+      else if (!reduceMotion) autoRotar.current = true;
+    };
+
     return (
       <div ref={containerRef} className="relative h-full w-full bg-surface-0">
         <canvas
           ref={canvasRef}
-          style={{ width: dimensions.width, height: dimensions.height }}
+          style={{
+            width: dimensions.width,
+            height: dimensions.height,
+            // Evita que el navegador se quede el gesto para desplazar la página.
+            touchAction: "none",
+          }}
           onMouseMove={onMouseMove}
           onMouseDown={onMouseDown}
           onMouseUp={onMouseUp}
@@ -496,6 +575,12 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
             setHoverId(null);
           }}
           onWheel={onWheel}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+          onTouchCancel={() => {
+            tacto.current = null;
+          }}
         />
 
         <div className="pointer-events-none absolute bottom-6 left-6 flex flex-col gap-1.5 rounded-xl bg-black/70 px-4 py-3 text-xs text-white/70 shadow-float backdrop-blur-md">
@@ -509,7 +594,7 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
           </div>
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full" style={{ backgroundColor: "#9fb4c7" }} />
-            Cortes de otros pa\u00edses
+            Cortes de otros países
           </div>
           <div className="mt-1 text-label text-[10px] text-white/40">
             Tamaño = conexiones · arrastra para girar
