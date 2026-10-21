@@ -484,6 +484,165 @@ export const resoluciones: Resolucion[] = [
       },
     ],
   },
+  {
+    id: "apl-309-2024",
+    tipo: "Apelacion",
+    institucion: "Corte Suprema",
+    numero: "Recurso de Apelaci\u00f3n N.\u00b0 309-2024/Cusco",
+    titulo:
+      "Condena del absuelto en segunda instancia: poderes del tribunal revisor y l\u00edmite de la inmediaci\u00f3n",
+    sala: "Sala Penal Permanente - Corte Suprema",
+    fecha: "2026-06-12",
+    citas: 0,
+    resumenRatioDecidendi:
+      "La Corte confirm\u00f3 la condena por usurpaci\u00f3n con agravantes dictada en segunda instancia contra quien hab\u00eda sido absuelto en primera. Precis\u00f3 que, por la naturaleza sustitutiva de la apelaci\u00f3n penal y las precisiones de la Ley 31592, el tribunal superior puede revocar la absoluci\u00f3n y condenar, con el \u00fanico l\u00edmite del principio de inmediaci\u00f3n sobre la prueba personal: puede revisar si lo que se atribuye al testigo es lo que efectivamente declar\u00f3 y si su versi\u00f3n es coherente y veros\u00edmil, pero no sustituir la percepci\u00f3n directa del juez que la recibi\u00f3.",
+    articulosAplicados: [
+      "Art. 202 inciso 2 y 204 inciso 2 - C\u00f3digo Penal (Usurpaci\u00f3n con agravantes)",
+      "Art. 425 numeral 2 - C\u00f3digo Procesal Penal (Inmediaci\u00f3n sobre la prueba personal)",
+      "Art. 419 numeral 1 - C\u00f3digo Procesal Penal (modificado por Ley N.\u00b0 31592)",
+      "Art. 409 - C\u00f3digo Procesal Penal (Tantum devolutum quantum appellatum)",
+    ],
+    pdfUrl: "/documentos/apl-309-2024.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla, numeral I",
+        tema: "El tribunal superior puede condenar al absuelto",
+        texto:
+          "Atento a la naturaleza sustitutiva del recurso de apelaci\u00f3n penal y a las \u00faltimas precisiones establecidas por la Ley n.\u00b0 31592, el Tribunal Superior puede revocar la sentencia de primera instancia y condenar al absuelto por el Juzgado Penal.",
+        verificado: true,
+      },
+      {
+        referencia: "Sumilla, numeral II",
+        tema: "L\u00edmite de la inmediaci\u00f3n sobre la prueba personal",
+        texto:
+          "[L]a regla es que el iudex ad quem tiene el mismo poder que el iudex a quo, con el \u00fanico l\u00edmite del respeto del principio de inmediaci\u00f3n acerca de la prueba personal (art\u00edculo 425, numeral 2, del C\u00f3digo Procesal Penal). Por tanto, muy bien puede \u2014y debe\u2014 (i) analizar la correcci\u00f3n de la interpretaci\u00f3n de la prueba personal (en especial, las testimoniales) [...]; y (ii) verificar si la testimonial es, en s\u00ed misma, coherente, l\u00f3gica y sin lagunas (verosimilitud interna).",
+        verificado: true,
+      },
+    ],
+  },
+  {
+    id: "apl-6-2025",
+    tipo: "Apelacion",
+    institucion: "Corte Suprema",
+    numero: "Apelaci\u00f3n N.\u00b0 6-2025/Ucayali",
+    titulo:
+      "Usurpaci\u00f3n de funciones de una fiscal adjunta: nulidad por no motivar el alcance de su competencia",
+    sala: "Sala Penal Permanente - Corte Suprema",
+    fecha: "2026-05-07",
+    citas: 0,
+    resumenRatioDecidendi:
+      "La Corte declar\u00f3 fundada la apelaci\u00f3n del Ministerio P\u00fablico contra la absoluci\u00f3n de una fiscal adjunta acusada de usurpaci\u00f3n de funciones por no remitir un caso a la fiscal\u00eda competente. Consider\u00f3 que no basta invocar el art\u00edculo 24 del Reglamento de la Fiscal\u00eda de la Naci\u00f3n para concluir que la procesada ten\u00eda la facultad de actuar, sin evaluar las circunstancias concretas: ya se hab\u00edan realizado actos de investigaci\u00f3n y se sab\u00eda que la fiscal\u00eda especializada en criminalidad organizada era competente para el delito de lavado de activos. Al no argumentarse si esos actos bastaban para delimitar la competencia, se afect\u00f3 el deber de motivaci\u00f3n y la sentencia fue declarada nula en ese extremo.",
+    articulosAplicados: [
+      "Delito contra la Administraci\u00f3n p\u00fablica - Usurpaci\u00f3n de funciones (C\u00f3digo Penal)",
+      "Art. 24 - Reglamento aprobado por Resoluci\u00f3n de la Fiscal\u00eda de la Naci\u00f3n N.\u00b0 1423-2015-MP-FN",
+      "Art. 123 - C\u00f3digo Procesal Penal (Resoluciones judiciales)",
+      "Art. 425 - C\u00f3digo Procesal Penal (Sentencia de segunda instancia)",
+    ],
+    pdfUrl: "/documentos/apl-6-2025.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla, literal a",
+        tema: "No basta invocar el reglamento sin evaluar el caso",
+        texto:
+          "En el caso, no se han evaluado debidamente los medios de prueba sometidos al contradictorio en el plenario. No basta con la sola aplicaci\u00f3n del art\u00edculo 24 del Reglamento, sin que se tomen en cuenta las circunstancias del caso. [...] No se argument\u00f3 de forma positiva o negativa si dichos actos de investigaci\u00f3n eran suficientes para delimitar competencia y, a partir de ello, si la recurrente funcionalmente ten\u00eda la facultad de decidir por el dinero incautado [...]. Por lo tanto, resulta evidente que se ha afectado el derecho a la motivaci\u00f3n de las resoluciones judiciales.",
+        verificado: true,
+      },
+    ],
+  },
+  {
+    id: "apl-27-2025",
+    tipo: "Apelacion",
+    institucion: "Corte Suprema",
+    numero: "Recurso de Apelaci\u00f3n N.\u00b0 27-2025/Madre de Dios",
+    titulo:
+      "Rehusamiento de actos funcionales: los agravios no afectan la relevancia t\u00edpica del hecho",
+    sala: "Sala Penal Permanente - Corte Suprema",
+    fecha: "2026-05-28",
+    citas: 0,
+    resumenRatioDecidendi:
+      "La Corte declar\u00f3 infundada la apelaci\u00f3n contra la condena por rehusamiento de actos funcionales, al considerar que los agravios expuestos por la defensa no afectan la relevancia t\u00edpica del hecho imputado. Se mantuvo la pena de ocho meses de privaci\u00f3n de libertad suspendida por un a\u00f1o de prueba, junto con la inhabilitaci\u00f3n por un a\u00f1o y treinta d\u00edas-multa.",
+    articulosAplicados: [
+      "Art. 377 - C\u00f3digo Penal (Rehusamiento de actos funcionales)",
+      "Art. 36 incisos 1 y 2 - C\u00f3digo Penal (Inhabilitaci\u00f3n)",
+      "Art. 425 - C\u00f3digo Procesal Penal (Sentencia de segunda instancia)",
+    ],
+    pdfUrl: "/documentos/apl-27-2025.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla",
+        tema: "Agravios que no inciden en la tipicidad",
+        texto:
+          "En el presente caso, los agravios expuestos no afectan la relevancia t\u00edpica del hecho imputado. En consecuencia, el recurso de apelaci\u00f3n resulta infundado.",
+        verificado: true,
+      },
+    ],
+  },
+  {
+    id: "stc-1129-2026",
+    tipo: "Habeas Corpus",
+    institucion: "Tribunal Constitucional",
+    numero: "STC 1129/2026 - Exp. N.\u00b0 01742-2026-PHC/TC (Lambayeque)",
+    titulo:
+      "Omisi\u00f3n impropia: condenar al funcionario exige acreditar su posici\u00f3n de garante y el nexo de evitabilidad",
+    sala: "Sala Primera - Tribunal Constitucional",
+    fecha: "2026-07-02",
+    citas: 0,
+    resumenRatioDecidendi:
+      "El Tribunal declar\u00f3 fundada en parte la demanda de habeas corpus y anul\u00f3 la condena por contaminaci\u00f3n del ambiente impuesta a un funcionario bajo la figura de la omisi\u00f3n impropia. Consider\u00f3 vulnerado el derecho a la debida motivaci\u00f3n en conexidad con la libertad personal y el principio de legalidad penal, porque la Sala se limit\u00f3 a afirmar que el procesado ten\u00eda la obligaci\u00f3n de custodiar la labor de sus funcionarios y el deber de impedir el delito, sin acreditar de manera concreta su posici\u00f3n de garante ni el nexo de evitabilidad que exige la comisi\u00f3n por omisi\u00f3n.",
+    articulosAplicados: [
+      "Art. 13 - C\u00f3digo Penal (Omisi\u00f3n impropia o comisi\u00f3n por omisi\u00f3n)",
+      "Art. 304 - C\u00f3digo Penal (Contaminaci\u00f3n del ambiente)",
+      "Art. 139 inciso 5 - Constituci\u00f3n Pol\u00edtica del Per\u00fa (Motivaci\u00f3n de resoluciones judiciales)",
+      "Art. 2 inciso 24 literal d) - Constituci\u00f3n Pol\u00edtica del Per\u00fa (Principio de legalidad penal)",
+    ],
+    pdfUrl: "/documentos/stc-1129-2026.pdf",
+    fundamentos: [
+      {
+        referencia: "Fundamento 21 (cita a la Corte Suprema)",
+        tema: "Qu\u00e9 exige la omisi\u00f3n impropia",
+        texto:
+          "Implica el deber de impedir un hecho punible o se geste un peligro inminente, ligado a su posici\u00f3n de garante, que le impele proteger todo bien jur\u00eddico bajo su dominio y control. As\u00ed, la posici\u00f3n de garante converger\u00e1 en penalmente trascendente y decisiva, ante la concurrencia del nexo de evitabilidad, esto es, que pudo haberse evitado el hecho, si la conducta debida se hubiere cumplido.",
+        verificado: true,
+      },
+    ],
+  },
+  {
+    id: "stc-0864-2026",
+    tipo: "Habeas Corpus",
+    institucion: "Tribunal Constitucional",
+    numero: "STC 0864/2026 - Exp. N.\u00b0 00800-2024-PHC/TC (Cusco)",
+    titulo:
+      "Prisi\u00f3n preventiva: tener un domicilio distinto al del Reniec no acredita por s\u00ed solo el peligro de fuga",
+    sala: "Sala Segunda - Tribunal Constitucional",
+    fecha: "2026-06-22",
+    citas: 0,
+    resumenRatioDecidendi:
+      "El Tribunal declar\u00f3 fundada en parte la demanda y anul\u00f3 el auto de vista que impuso prisi\u00f3n preventiva por diecis\u00e9is meses. La Sala superior dedujo el peligro de fuga de la gravedad de la pena y descart\u00f3 en bloque los arraigos del procesado, sin explicar por qu\u00e9 desestimaba el arraigo laboral ni por qu\u00e9 el hecho de tener un domicilio real distinto al consignado en el Reniec restaba calidad al arraigo domiciliario. El Tribunal recalc\u00f3 que la fundamentaci\u00f3n del peligro procesal no puede sustentarse en meras presunciones o conjeturas.",
+    articulosAplicados: [
+      "Art. 139 inciso 5 - Constituci\u00f3n Pol\u00edtica del Per\u00fa (Motivaci\u00f3n de resoluciones judiciales)",
+      "Art. 2 inciso 24 - Constituci\u00f3n Pol\u00edtica del Per\u00fa (Libertad personal)",
+      "Art. 296 y 297 - C\u00f3digo Penal (Tr\u00e1fico il\u00edcito de drogas agravado)",
+      "Prisi\u00f3n preventiva: presupuesto de peligro procesal (peligro de fuga y de obstaculizaci\u00f3n)",
+    ],
+    pdfUrl: "/documentos/stc-0864-2026.pdf",
+    fundamentos: [
+      {
+        referencia: "Fundamento 14",
+        tema: "Domicilio distinto al del Reniec",
+        texto:
+          "Si bien la sala superior concluye que \u201cel domicilio que consign\u00f3 [el procesado] no coincide con el de su ficha Reniec y que la actividad laboral que \u2014dice\u2014 realiza conjuntamente con sus estudios en la universidad no cumple con el est\u00e1ndar exigido para un arraigo de calidad\u201d, no explica de manera m\u00e1s detallada el motivo por el cual desestima el arraigo laboral, ni el hecho de que una persona tenga como domicilio real uno diferente del consignado en el Reniec.",
+        verificado: true,
+      },
+      {
+        referencia: "Fundamento 15",
+        tema: "El peligro procesal no se presume",
+        texto:
+          "Cabe recordar que en la sentencia emitida en el Expediente 03248-2019-PHC/TC, fundamento 137, este Tribunal deja claro que la fundamentaci\u00f3n que ata\u00f1e al peligro procesal no puede estar basada en meras presunciones o conjeturas.",
+        verificado: true,
+      },
+    ],
+  },
+
 ];
 
 /**
@@ -493,6 +652,48 @@ export const resoluciones: Resolucion[] = [
  * se puede explicar en una línea, no se dibuja.
  */
 const enlaces: GraphLink[] = [
+  {
+    source: "apl-6-2025",
+    target: "stc-0864-2026",
+    motivo:
+      "Ambas anulan una decisi\u00f3n por motivaci\u00f3n insuficiente: una sobre la competencia de la fiscal, la otra sobre el peligro procesal.",
+  },
+  {
+    source: "apl-6-2025",
+    target: "cidh-zegarra-marin-2017",
+    motivo:
+      "Deber de motivaci\u00f3n de la resoluci\u00f3n judicial como garant\u00eda del debido proceso (art. 8.1 CADH / art. 139.5 de la Constituci\u00f3n).",
+  },
+  {
+    source: "stc-0864-2026",
+    target: "cidh-zegarra-marin-2017",
+    motivo:
+      "Exigencia de motivaci\u00f3n suficiente y prohibici\u00f3n de sustentar la decisi\u00f3n en presunciones en contra del procesado.",
+  },
+  {
+    source: "stc-0864-2026",
+    target: "rn-977-2025",
+    motivo:
+      "Las dos anulan por no motivar el pron\u00f3stico sobre la conducta futura del procesado: peligro de fuga en una, prognosis para suspender la pena en la otra.",
+  },
+  {
+    source: "apl-27-2025",
+    target: "apl-6-2025",
+    motivo:
+      "Delitos contra la Administraci\u00f3n p\u00fablica cometidos por funcionarios en el ejercicio del cargo (rehusamiento de actos funcionales y usurpaci\u00f3n de funciones).",
+  },
+  {
+    source: "stc-1129-2026",
+    target: "apl-27-2025",
+    motivo:
+      "Responsabilidad penal del funcionario p\u00fablico derivada del incumplimiento de los deberes propios del cargo.",
+  },
+  {
+    source: "apl-309-2024",
+    target: "cas-1885-2023",
+    motivo:
+      "Alcances y l\u00edmites del recurso impugnatorio: qu\u00e9 puede revisar el tribunal superior y hasta d\u00f3nde llega su competencia recursal.",
+  },
   {
     source: "rn-845-2025",
     target: "rn-977-2025",

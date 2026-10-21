@@ -2,6 +2,7 @@ export type TipoResolucion =
   | "Acuerdo Plenario"
   | "Casacion"
   | "Recurso de Nulidad"
+  | "Apelacion"
   | "Habeas Corpus"
   | "Sentencia CIDH";
 

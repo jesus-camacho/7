@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Check, Copy, FileText, Gavel, Globe2, Scale, ScrollText, ShieldCheck, X } from "lucide-react";
+import { Check, Copy, FileText, Gavel, Globe2, Scale, ScrollText, ShieldCheck, Undo2, X } from "lucide-react";
 import { Fundamento, GraphNode, TipoResolucion } from "../types";
 
 export interface Conexion {
@@ -19,6 +19,7 @@ const BADGE_STYLE: Record<TipoResolucion, string> = {
   "Acuerdo Plenario": "bg-gold-100 text-gold-400",
   Casacion: "bg-violet-100 text-violet-400",
   "Recurso de Nulidad": "bg-teal-100 text-teal-400",
+  Apelacion: "bg-[rgba(244,164,96,0.16)] text-[#e8b07a]",
   "Habeas Corpus": "bg-[rgba(147,197,253,0.16)] text-[#93c5fd]",
   "Sentencia CIDH": "bg-[rgba(139,195,74,0.16)] text-[#a5d16a]",
 };
@@ -27,6 +28,7 @@ const BADGE_ICON: Record<TipoResolucion, typeof Gavel> = {
   "Acuerdo Plenario": Gavel,
   Casacion: ScrollText,
   "Recurso de Nulidad": Scale,
+  Apelacion: Undo2,
   "Habeas Corpus": ShieldCheck,
   "Sentencia CIDH": Globe2,
 };
