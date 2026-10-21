@@ -1,44 +1,33 @@
-# Scripts de ingesta de datos
+# Scripts de ingesta de jurisprudencia
 
-## `scrape_pj_jurisprudencia.py`
+## `pj_scraper.py`
 
-Descarga los PDFs de jurisprudencia penal desde el portal de
-Jurisprudencia Sistematizada del Poder Judicial del Perú y genera un
-`resoluciones.json` con los metadatos, listo para integrar al portal.
+Descarga jurisprudencia penal del portal de Jurisprudencia Sistematizada del
+Poder Judicial del Perú. Corre en la nube (GitHub Actions), porque el entorno
+de desarrollo tiene la salida a internet restringida y no alcanza pj.gob.pe.
 
-**Antes de correrlo hay que rellenar 4 selectores** (ver instrucciones
-al final del propio archivo) inspeccionando la página real con las
-DevTools del navegador — el script no puede escribirse a ciegas sin
-ver la estructura HTML del sitio.
+Dos modos:
 
-```bash
-pip install playwright
-playwright install chromium
-python scrape_pj_jurisprudencia.py
-```
+- `--mode recon`: abre el portal y guarda su HTML, capturas y un resumen de
+  su estructura (formularios, selects, iframes, contenedores repetidos). Sirve
+  para descubrir los selectores reales sin abrir el sitio a mano.
+- `--mode scrape`: usa los selectores de `pj_selectors.json` para recorrer los
+  resultados, descargar los PDF y escribir un índice JSON. Es idempotente.
 
-Genera:
+## Cómo correrlo en la nube
 
-```
-scripts/descargas/
-├── documentos/
-│   ├── acuerdo-plenario-n-1-2026-cj-116.pdf
-│   ├── casacion-n-245-2019-lima.pdf
-│   └── ...
-└── resoluciones.json
-```
+En GitHub: pestaña **Actions** → workflow **Jurisprudencia PJ** → *Run workflow*.
 
-### Siguiente paso: integrarlo al portal
+1. Primera corrida en modo `recon`. Al terminar, descarga el artefacto
+   `recon-pj` (HTML + `RESUMEN.md` con los selectores candidatos).
+2. Con eso se completan los `TODO` de `pj_selectors.json`.
+3. Segunda corrida en modo `scrape`: descarga los PDF y los commitea en
+   `data/pj-ingesta/`.
 
-1. Copia los PDFs de `descargas/documentos/` a `public/documentos/`.
-2. Envíame (o pega en el chat) el `resoluciones.json` resultante — lo
-   reviso, lo normalizo al formato de `src/types.ts` y reemplazo los
-   datos de prueba en `src/data/mockData.ts` por los reales.
+Los documentos descargados quedan en `data/pj-ingesta/`, **no** en
+`public/documentos/`: nada entra al portal sin revisión previa del contenido.
 
-### Nota sobre "Resumen de la Ratio Decidendi" y "Artículos Aplicados"
+## Correrlo localmente
 
-El portal del Poder Judicial no publica esos dos campos como metadatos
-sueltos — hay que extraerlos del propio texto del PDF. Una vez que
-tengamos los PDFs reales descargados, puedo armar un segundo script que
-lea cada documento y genere ese resumen automáticamente (con revisión
-humana antes de publicarlo, dado que es contenido legal sensible).
+    pip install playwright && playwright install chromium
+    python scripts/pj_scraper.py --mode recon --out recon/

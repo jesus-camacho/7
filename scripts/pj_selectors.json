@@ -1,0 +1,13 @@
+{
+  "_comentario": "Selectores CSS reales del portal del PJ. Se completan a partir del artefacto 'recon-pj' que genera el workflow en modo recon. Mientras digan TODO, el modo scrape se niega a correr.",
+
+  "fila_resultado": "TODO: contenedor que se repite una vez por resolucion",
+  "numero": "TODO: elemento con el numero de resolucion dentro de la fila",
+  "titulo": "TODO: elemento con el titulo/sumilla dentro de la fila",
+  "fecha": "TODO: elemento con la fecha dentro de la fila",
+  "sala": "TODO: elemento con la sala/organo dentro de la fila",
+  "enlace_pdf": "a[href$='.pdf']",
+  "boton_siguiente": "TODO: boton o enlace de paginacion 'Siguiente'",
+
+  "pasos_busqueda": []
+}

@@ -1,0 +1,90 @@
+name: Jurisprudencia PJ
+
+# Corre el scraper del portal de Jurisprudencia Sistematizada del Poder
+# Judicial en un runner de GitHub (internet sin restricciones), algo que el
+# entorno de desarrollo no puede hacer por politica de red.
+#
+# Modo "recon": explora el portal y sube su estructura como artefacto, para
+# poder escribir los selectores reales sin abrir el sitio a mano.
+# Modo "scrape": descarga los PDF y los commitea en data/pj-ingesta/.
+#
+# La descarga programada (cron) se habilita recien cuando los selectores de
+# scripts/pj_selectors.json esten validados con una corrida real.
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Que hacer"
+        type: choice
+        options: [recon, scrape]
+        default: recon
+      max_docs:
+        description: "Tope de documentos a descargar (0 = sin tope)"
+        default: "20"
+      url:
+        description: "URL de inicio (opcional)"
+        default: "https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_jurisprudencia_sistematizada"
+
+concurrency:
+  group: jurisprudencia-pj
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      MODE: ${{ github.event.inputs.mode || 'recon' }}
+      MAX_DOCS: ${{ github.event.inputs.max_docs || '0' }}
+      START_URL: ${{ github.event.inputs.url || 'https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_jurisprudencia_sistematizada' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar Playwright
+        run: |
+          pip install --quiet playwright
+          playwright install --with-deps chromium
+
+      - name: Reconocimiento del portal
+        if: env.MODE == 'recon'
+        run: python scripts/pj_scraper.py --mode recon --url "$START_URL" --out recon/
+
+      - name: Subir resultado del reconocimiento
+        if: env.MODE == 'recon'
+        uses: actions/upload-artifact@v4
+        with:
+          name: recon-pj
+          path: recon/
+          retention-days: 14
+
+      - name: Descargar jurisprudencia
+        if: env.MODE == 'scrape'
+        run: |
+          python scripts/pj_scraper.py \
+            --mode scrape \
+            --url "$START_URL" \
+            --out data/pj-ingesta/ \
+            --max-docs "$MAX_DOCS"
+
+      - name: Commitear lo descargado
+        if: env.MODE == 'scrape'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/pj-ingesta/
+          if git diff --cached --quiet; then
+            echo "Sin documentos nuevos; no hay nada que commitear."
+            exit 0
+          fi
+          n=$(git diff --cached --name-only | grep -c '\.pdf$' || true)
+          git commit -m "Ingesta automatica de jurisprudencia del PJ ($n PDF nuevos)"
+          git push

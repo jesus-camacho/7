@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 import GraphVisualizer, {
   GraphVisualizerHandle,
 } from "./components/GraphVisualizer";
-import SidePanel from "./components/SidePanel";
+import SidePanel, { Conexion } from "./components/SidePanel";
 import { graphData } from "./data/resoluciones";
 import { GraphNode } from "./types";
 
@@ -23,6 +23,19 @@ export default function App() {
         n.numero.toLowerCase().includes(q)
     );
   }, [query]);
+
+  const conexiones = useMemo<Conexion[]>(() => {
+    if (!selectedNode) return [];
+    const porId = new Map(graphData.nodes.map((n) => [n.id, n]));
+    return graphData.links
+      .filter((l) => l.source === selectedNode.id || l.target === selectedNode.id)
+      .map((l) => {
+        const otroId = l.source === selectedNode.id ? l.target : l.source;
+        const nodo = porId.get(otroId);
+        return nodo ? { nodo, motivo: l.motivo } : null;
+      })
+      .filter((c): c is Conexion => c !== null);
+  }, [selectedNode]);
 
   const selectNode = (node: GraphNode) => {
     setSelectedNode(node);
@@ -84,7 +97,13 @@ export default function App() {
         </div>
       </div>
 
-      <SidePanel node={selectedNode} open={panelOpen} onClose={closePanel} />
+      <SidePanel
+        node={selectedNode}
+        open={panelOpen}
+        onClose={closePanel}
+        conexiones={conexiones}
+        onSelectNode={selectNode}
+      />
     </div>
   );
 }
