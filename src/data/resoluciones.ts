@@ -643,6 +643,61 @@ export const resoluciones: Resolucion[] = [
     ],
   },
 
+  {
+    id: "cas-785-2018",
+    tipo: "Casacion",
+    institucion: "Corte Suprema",
+    numero: "Casaci\u00f3n N.\u00b0 785-2018/Piura",
+    titulo:
+      "La casaci\u00f3n no sustituye al tribunal de apelaci\u00f3n en la valoraci\u00f3n de la prueba",
+    sala: "Segunda Sala Penal Transitoria - Corte Suprema",
+    fecha: "2018-10-05",
+    citas: 0,
+    resumenRatioDecidendi:
+      "Quien hab\u00eda sido excluido como actor civil en una investigaci\u00f3n por fraude procesal interpuso casaci\u00f3n excepcional para que la Corte fijara par\u00e1metros sobre los art\u00edculos 94 y 98 del C\u00f3digo Procesal Penal, en especial si puede constituirse en actor civil un perjudicado que no sea titular del bien jur\u00eddico protegido. La Corte declar\u00f3 nulo el concesorio e inadmisible el recurso, y lo conden\u00f3 al pago de costas. Su sumilla precisa que la casaci\u00f3n exige indicar las razones y causales que la motivan, pues solo determina si el fallo contiene una violaci\u00f3n de la ley. Nota: el PDF incluye, despu\u00e9s de la ejecutoria, un comentario acad\u00e9mico de Percy Garc\u00eda Cavero que no forma parte de la decisi\u00f3n.",
+    articulosAplicados: [
+      "Art. 94 y 98 - C\u00f3digo Procesal Penal (Agraviado y actor civil)",
+      "Art. 497 - C\u00f3digo Procesal Penal (Costas de oficio)",
+      "Art. 506 - C\u00f3digo Procesal Penal (Exigencia de las costas)",
+    ],
+    pdfUrl: "/documentos/cas-785-2018.pdf",
+    fundamentos: [
+      {
+        referencia: "Sumilla",
+        tema: "Qu\u00e9 puede y qu\u00e9 no puede revisar la casaci\u00f3n",
+        texto:
+          "La casaci\u00f3n exige la precisi\u00f3n de las razones y causales que la motivan, en tanto este medio impugnatorio solo se ocupa de determinar si el fallo contiene una violaci\u00f3n de la ley y no permite, per se, la intervenci\u00f3n del Tribunal de Casaci\u00f3n para sustituir en la valoraci\u00f3n de la prueba al Tribunal de Apelaci\u00f3n, a efectos de dictar un fallo sustutivo.",
+        verificado: true,
+      },
+    ],
+  },
+  {
+    id: "col-54131-2020",
+    tipo: "Casacion",
+    institucion: "Corte Suprema de Colombia",
+    numero: "Casaci\u00f3n N.\u00b0 54131 (SP-2020) - Colombia",
+    titulo:
+      "Estafa agravada: elementos del delito y orden causal entre enga\u00f1o, error y perjuicio",
+    sala: "Sala de Casaci\u00f3n Penal - Corte Suprema de Justicia de Colombia",
+    fecha: "2020-06-03",
+    citas: 0,
+    resumenRatioDecidendi:
+      "La Fiscal\u00eda recurri\u00f3 en casaci\u00f3n la sentencia del Tribunal Superior de Medell\u00edn que hab\u00eda absuelto al procesado del delito de estafa agravada, tras revocar la condena de primera instancia. La defensa sosten\u00eda que el inmueble se hab\u00eda perdido por desidia o abandono de su propietario y que no hubo maniobras fraudulentas. La Corte cas\u00f3 la sentencia absolutoria y confirm\u00f3 la condena, al verificar errores de hecho en la apreciaci\u00f3n de la prueba, y recordar que la estafa se configura cuando el artificio o enga\u00f1o induce al error que determina el desplazamiento patrimonial, en ese orden y con encadenamiento causal inequ\u00edvoco.",
+    articulosAplicados: [
+      "Art. 246 - C\u00f3digo Penal de Colombia (Estafa)",
+    ],
+    pdfUrl: "/documentos/col-54131-2020.pdf",
+    fundamentos: [
+      {
+        referencia: "Fundamento 6.4",
+        tema: "Los cinco elementos de la estafa",
+        texto:
+          "La conducta punible de estafa, descrita en el art\u00edculo 246 del C\u00f3digo Penal, que atenta contra el patrimonio econ\u00f3mico, consiste en obtener provecho il\u00edcito, para s\u00ed o para un tercero, con perjuicio de otro, a trav\u00e9s de la inducci\u00f3n o mantenimiento en error del afectado por medio de artificios o enga\u00f1os. [L]os elementos que agotan la ilicitud [son]: (i) despliegue de un artificio o enga\u00f1o, dirigido a suscitar error en la v\u00edctima; (ii) error o juicio falso de quien sufre el enga\u00f1o, determinado por el ardid; (iii) obtenci\u00f3n, por ese medio, de un provecho il\u00edcito; (iv) esto \u00faltimo, en perjuicio correlativo de otro; y, (v) sucesi\u00f3n causal entre el artificio o enga\u00f1o y el error, y entre \u00e9ste y el provecho injusto que refluye en da\u00f1o patrimonial ajeno.",
+        verificado: true,
+      },
+    ],
+  },
+
 ];
 
 /**
@@ -652,6 +707,18 @@ export const resoluciones: Resolucion[] = [
  * se puede explicar en una línea, no se dibuja.
  */
 const enlaces: GraphLink[] = [
+  {
+    source: "cas-785-2018",
+    target: "cas-1885-2023",
+    motivo:
+      "Ambos son autos de calificaci\u00f3n que declaran inadmisible una casaci\u00f3n excepcional por no cumplir sus requisitos de procedencia.",
+  },
+  {
+    source: "col-54131-2020",
+    target: "cas-2308-2022",
+    motivo:
+      "Delitos de defraudaci\u00f3n patrimonial cometidos mediante enga\u00f1o (estafa agravada y abuso de firma en blanco).",
+  },
   {
     source: "apl-6-2025",
     target: "stc-0864-2026",
@@ -827,6 +894,8 @@ const colorPorInstitucion = (inst: Resolucion["institucion"]) => {
       return "#d8d8dc";
     case "Corte Suprema":
       return "#e8e8ec";
+    case "Corte Suprema de Colombia":
+      return "#9fb4c7";
   }
 };
 

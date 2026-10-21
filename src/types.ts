@@ -10,7 +10,8 @@ export type TipoResolucion =
 export type Institucion =
   | "Corte Suprema"
   | "Tribunal Constitucional"
-  | "Corte IDH";
+  | "Corte IDH"
+  | "Corte Suprema de Colombia";
 
 /**
  * Fragmento citable de una resolución: texto literal con su referencia

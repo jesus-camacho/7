@@ -121,6 +121,21 @@ TIPOS = [
 ]
 
 
+MARCAS_DOCTRINA = re.compile(
+    r"comentarios?\s+a(?:l|\s+la)\s+(acuerdo\s+plenario|casaci[oó]n|sentencia|ejecutoria)",
+    re.I,
+)
+
+
+def es_doctrina(t: str) -> bool:
+    """
+    True si el PDF es un artículo o comentario académico y no la resolución.
+    Importa: citar a un comentarista como si fuera el tribunal es un error
+    grave, y estos textos vienen mezclados con la jurisprudencia.
+    """
+    return bool(MARCAS_DOCTRINA.search(re.sub(r"\s+", " ", t[:2500])))
+
+
 def identificar(t: str) -> dict:
     cabecera = re.sub(r"\s+", " ", t[:2500])
 
@@ -154,6 +169,21 @@ def identificar(t: str) -> dict:
             "numero": f"Caso {nombre} Vs. {m_cidh.group(2).title()}"
                       + (f" (Serie C N.° {serie})" if serie else ""),
             "sala": "Corte Interamericana de Derechos Humanos",
+        }
+
+    # Corte Superior Nacional: se identifica por expediente, no por número
+    # correlativo de resolución.
+    if re.search(r"corte\s+superior\s+nacional", cabecera, re.I):
+        m_exp = re.search(r"expediente\s*n[.\s°º]*\s*:?\s*([\d\-]+)", cabecera, re.I)
+        exp = m_exp.group(1) if m_exp else ""
+        sala = re.search(r"(\d)\.?[ªa]\s+sala\s+penal\s+de\s+apelaciones", cabecera, re.I)
+        return {
+            "id": "csn-" + re.sub(r"[^0-9]+", "-", exp).strip("-") if exp else "",
+            "tipo": "Resolucion",
+            "institucion": "Corte Superior Nacional",
+            "numero": f"Expediente N.° {exp}" if exp else "Corte Superior Nacional",
+            "sala": (f"{sala.group(1)}.ª Sala Penal de Apelaciones - " if sala else "")
+                    + "Corte Superior Nacional de Justicia Penal Especializada",
         }
 
     for patron, tipo, prefijo in TIPOS:
@@ -279,10 +309,18 @@ def extraer_articulos(t: str) -> list[str]:
 
 def procesar(pdf: Path) -> dict:
     t = texto_de(pdf)
+    paginas = len(pypdf.PdfReader(str(pdf)).pages) or 1
+    if len(t) / paginas < 100:
+        return {"id": "", "clase": "escaneado", "archivo": pdf.name,
+                "paginas": paginas, "caracteres": len(t)}
+    if es_doctrina(t):
+        return {"id": "", "clase": "doctrina", "archivo": pdf.name,
+                "paginas": paginas, "caracteres": len(t)}
     datos = identificar(t)
     ident = datos["id"]
     return {
         **datos,
+        "clase": "jurisprudencia",
         "archivo": pdf.name,
         "fecha": extraer_fecha(t),
         "sumilla": extraer_sumilla(t),
@@ -309,7 +347,7 @@ def main() -> None:
         sys.exit(f"No se encontraron PDF en {args.carpeta}")
 
     print(f"Procesando {len(pdfs)} documentos...\n")
-    indice, sin_identificar = [], []
+    indice, sin_identificar, escaneados, doctrina = [], [], [], []
     for i, pdf in enumerate(pdfs, 1):
         try:
             d = procesar(pdf)
@@ -317,11 +355,16 @@ def main() -> None:
             print(f"  [{i}/{len(pdfs)}] {pdf.name}: ERROR {exc}")
             sin_identificar.append(pdf.name)
             continue
-        estado = d["id"] or "SIN IDENTIFICAR"
-        print(f"  [{i}/{len(pdfs)}] {estado:<22} fund:{len(d['fundamentos']):<3} "
-              f"citas:{len(d['cita_a']):<3} {'sumilla' if d['sumilla'] else '—':<8} {d['fecha'] or '—'}")
+        estado = d["id"] or {"escaneado": "ESCANEADO (OCR)",
+                             "doctrina": "DOCTRINA (no es fallo)"}.get(
+                                 d.get("clase", ""), "SIN IDENTIFICAR")
+        print(f"  [{i}/{len(pdfs)}] {estado:<24} fund:{len(d.get('fundamentos', [])):<3} "
+              f"citas:{len(d.get('cita_a', [])):<3} "
+              f"{'sumilla' if d.get('sumilla') else '—':<8} {d.get('fecha') or '—'}")
         if not d["id"]:
-            sin_identificar.append(pdf.name)
+            clase = d.get("clase", "")
+            (escaneados if clase == "escaneado" else
+             doctrina if clase == "doctrina" else sin_identificar).append(pdf.name)
             continue
         indice.append(d)
         if args.copiar:
@@ -352,6 +395,13 @@ def main() -> None:
     print(f"Con fecha          : {con_fecha}")
     print(f"Con fundamentos    : {con_fund}")
     print(f"Enlaces por cita   : {len(enlaces)}")
+    if escaneados:
+        print(f"\nEscaneados, requieren OCR ({len(escaneados)}): "
+              f"{', '.join(escaneados[:8])}")
+        print("  -> pásalos por scripts/ocr.py y vuelve a correr esta ingesta")
+    if doctrina:
+        print(f"\nDoctrina, no son resoluciones ({len(doctrina)}): "
+              f"{', '.join(doctrina[:8])}")
     if sin_identificar:
         print(f"\nSin identificar ({len(sin_identificar)}): {', '.join(sin_identificar[:10])}")
     print(f"\nÍndice escrito en  : {args.salida}")

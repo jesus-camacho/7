@@ -507,6 +507,10 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
             <span className="h-2 w-2 rounded-full" style={{ backgroundColor: "#8bc34a" }} />
             Corte Interamericana de DD. HH.
           </div>
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full" style={{ backgroundColor: "#9fb4c7" }} />
+            Cortes de otros pa\u00edses
+          </div>
           <div className="mt-1 text-label text-[10px] text-white/40">
             Tamaño = conexiones · arrastra para girar
           </div>

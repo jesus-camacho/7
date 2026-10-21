@@ -1,0 +1,54 @@
+name: OCR de jurisprudencia
+
+# Añade capa de texto en español a las resoluciones escaneadas.
+# Corre en la nube porque el entorno de desarrollo no puede instalar
+# tesseract, y sin OCR esos documentos no se pueden buscar ni citar.
+
+on:
+  workflow_dispatch:
+    inputs:
+      carpeta:
+        description: "Carpeta con los PDF escaneados"
+        default: "public/documentos/escaneados"
+      salida:
+        description: "Carpeta donde dejar los PDF con texto"
+        default: "public/documentos/ocr"
+
+permissions:
+  contents: write
+
+jobs:
+  ocr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar tesseract y ocrmypdf
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-spa ghostscript
+          pip install --quiet ocrmypdf pypdf
+          tesseract --version | head -1
+
+      - name: Reconocer texto
+        run: |
+          python scripts/ocr.py "${{ github.event.inputs.carpeta || 'public/documentos/escaneados' }}" \
+            --salida "${{ github.event.inputs.salida || 'public/documentos/ocr' }}"
+
+      - name: Commitear los PDF con texto
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${{ github.event.inputs.salida || 'public/documentos/ocr' }}"
+          if git diff --cached --quiet; then
+            echo "No hay documentos nuevos con texto reconocido."
+            exit 0
+          fi
+          n=$(git diff --cached --name-only | grep -c '\.pdf$' || true)
+          git commit -m "OCR aplicado a $n resoluciones escaneadas"
+          git push
