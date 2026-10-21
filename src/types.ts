@@ -24,13 +24,6 @@ export interface Fundamento {
   verificado: boolean;
 }
 
-/** Lugar de los hechos: define dónde se ubica el punto sobre el globo. */
-export interface Lugar {
-  nombre: string;
-  lat: number;
-  lon: number;
-}
-
 export interface Resolucion {
   id: string;
   tipo: TipoResolucion;
@@ -43,7 +36,6 @@ export interface Resolucion {
   resumenRatioDecidendi: string;
   articulosAplicados: string[];
   pdfUrl: string;
-  lugar: Lugar;
   fundamentos?: Fundamento[];
 }
 

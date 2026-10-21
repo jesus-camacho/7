@@ -34,7 +34,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 103 - Constitución Política del Perú",
     ],
     pdfUrl: "/documentos/rn-845-2025.pdf",
-    lugar: { nombre: "Lima", lat: -12.05, lon: -77.04 },
     fundamentos: [
       {
         referencia: "Fundamento 2.9",
@@ -70,7 +69,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 280 - Código de Procedimientos Penales (Unidad del expediente)",
     ],
     pdfUrl: "/documentos/rn-690-2025.pdf",
-    lugar: { nombre: "Lima Norte", lat: -11.95, lon: -77.06 },
     fundamentos: [
       {
         referencia: "Fundamento 8.12",
@@ -100,7 +98,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 429 inciso 1 - Código Procesal Penal",
     ],
     pdfUrl: "/documentos/cas-2308-2022.pdf",
-    lugar: { nombre: "Chiclayo, Lambayeque", lat: -6.77, lon: -79.84 },
     fundamentos: [
       {
         referencia: "Sumilla, numeral I",
@@ -137,7 +134,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 428 inciso 1 literal d) - Código Procesal Penal (Doble conforme)",
     ],
     pdfUrl: "/documentos/cas-1885-2023.pdf",
-    lugar: { nombre: "Huacho, Huaura", lat: -11.11, lon: -77.61 },
     fundamentos: [
       {
         referencia: "Fundamento 3.3",
@@ -166,7 +162,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 58 y 59 - Código Penal (Reglas de conducta)",
     ],
     pdfUrl: "/documentos/rn-977-2025.pdf",
-    lugar: { nombre: "Aguayt\u00eda, Ucayali", lat: -9.04, lon: -75.51 },
     fundamentos: [
       {
         referencia: "Fundamento 10",
@@ -200,7 +195,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 1.1 - CADH (Obligación de respetar los derechos)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/seriec_20_esp.pdf",
-    lugar: { nombre: "Penal El Front\u00f3n, Callao", lat: -12.1, lon: -77.18 },
     fundamentos: [
       {
         referencia: "P\u00e1rr. 82 (cita la OC-8/87)",
@@ -230,7 +224,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 8.4 - CADH (Ne bis in idem)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/seriec_33_esp.pdf",
-    lugar: { nombre: "Lima", lat: -12.05, lon: -77.04 },
   },
   {
     id: "cidh-castillo-petruzzi-1999",
@@ -251,7 +244,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 2 - CADH (Deber de adoptar disposiciones de derecho interno)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/tablas/fichas/castillopetruzzi.pdf",
-    lugar: { nombre: "Lima", lat: -12.05, lon: -77.04 },
   },
   {
     id: "cidh-durand-ugarte-2000",
@@ -272,7 +264,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 1.1 - CADH (Obligación de respetar los derechos)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/Seriec_68_esp.pdf",
-    lugar: { nombre: "Penal El Front\u00f3n, Callao", lat: -12.1, lon: -77.18 },
     fundamentos: [
       {
         referencia: "P\u00e1rr. 117",
@@ -309,7 +300,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 25 - CADH (Protección judicial)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/seriec_69_esp.pdf",
-    lugar: { nombre: "Lima", lat: -12.05, lon: -77.04 },
   },
   {
     id: "cidh-barrios-altos-2001",
@@ -329,7 +319,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 8 y 25 - CADH (Garantías judiciales y protección judicial)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/Seriec_75_esp.pdf",
-    lugar: { nombre: "Barrios Altos, Lima", lat: -12.05, lon: -77.02 },
     fundamentos: [
       {
         referencia: "P\u00e1rr. 41",
@@ -358,7 +347,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 1.1 y 2 - CADH (Obligaciones generales)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/seriec_162_esp.pdf",
-    lugar: { nombre: "La Cantuta, Lurigancho-Chosica", lat: -11.94, lon: -76.7 },
   },
   {
     id: "cidh-anzualdo-castro-2009",
@@ -378,7 +366,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 1.1 y 2 - CADH (Obligaciones generales)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/seriec_202_esp.pdf",
-    lugar: { nombre: "Callao", lat: -12.06, lon: -77.14 },
   },
   {
     id: "cidh-j-vs-peru-2013",
@@ -399,7 +386,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 11 - CADH (Protección de la honra y de la dignidad)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/tablas/fichas/jvsperu.pdf",
-    lugar: { nombre: "Lima", lat: -12.05, lon: -77.04 },
   },
   {
     id: "cidh-espinoza-gonzales-2014",
@@ -420,7 +406,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 7.b - Convención de Belém do Pará",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/seriec_289_esp.pdf",
-    lugar: { nombre: "Lima", lat: -12.05, lon: -77.04 },
   },
   {
     id: "cidh-cruz-sanchez-2015",
@@ -441,7 +426,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 1.1 - CADH (Obligación de respetar los derechos)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/seriec_292_esp.pdf",
-    lugar: { nombre: "San Isidro, Lima", lat: -12.1, lon: -77.03 },
     fundamentos: [
       {
         referencia: "P\u00e1rr. 263",
@@ -470,7 +454,6 @@ export const resoluciones: Resolucion[] = [
       "Arts. 1, 6 y 8 - Convención Interamericana para Prevenir y Sancionar la Tortura",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/seriec_308_esp.pdf",
-    lugar: { nombre: "Huancayo, Jun\u00edn", lat: -12.07, lon: -75.21 },
   },
   {
     id: "cidh-zegarra-marin-2017",
@@ -491,7 +474,6 @@ export const resoluciones: Resolucion[] = [
       "Art. 1.1 - CADH (Obligación de respetar los derechos)",
     ],
     pdfUrl: "https://www.corteidh.or.cr/docs/casos/articulos/seriec_331_esp.pdf",
-    lugar: { nombre: "Lima", lat: -12.05, lon: -77.04 },
     fundamentos: [
       {
         referencia: "P\u00e1rr. 138",

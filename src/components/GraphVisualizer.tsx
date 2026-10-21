@@ -8,7 +8,6 @@ import {
   useState,
 } from "react";
 import { GraphData, GraphNode } from "../types";
-import { contornos } from "../data/mapa";
 
 interface GraphVisualizerProps {
   data: GraphData;
@@ -31,32 +30,19 @@ interface Vec3 {
 }
 
 const TWO_PI = Math.PI * 2;
-const GRADOS = Math.PI / 180;
+const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
 
-/** Coordenada geográfica a punto sobre la esfera unitaria. */
-const vectorDe = (lat: number, lon: number): Vec3 => {
-  const la = lat * GRADOS;
-  // La longitud se mide en sentido contrario al de la parametrización
-  // directa: así el este queda a la derecha en pantalla y el mapa no sale
-  // reflejado (comprobado con Lima, Chiclayo, Río, Bogotá y Santiago).
-  const lo = -lon * GRADOS;
-  return {
-    x: Math.cos(la) * Math.cos(lo),
-    y: Math.sin(la),
-    z: Math.cos(la) * Math.sin(lo),
-  };
+/** Distribución de Fibonacci: reparte N puntos de forma pareja sobre la esfera. */
+const fibonacciSphere = (count: number): Vec3[] => {
+  const pts: Vec3[] = [];
+  for (let i = 0; i < count; i++) {
+    const y = count === 1 ? 0 : 1 - (i / (count - 1)) * 2;
+    const r = Math.sqrt(Math.max(0, 1 - y * y));
+    const theta = i * GOLDEN_ANGLE;
+    pts.push({ x: Math.cos(theta) * r, y, z: Math.sin(theta) * r });
+  }
+  return pts;
 };
-
-/** Rotación que deja un punto mirando al frente del globo. */
-const camaraHacia = (v: Vec3) => ({
-  yaw: Math.atan2(-v.x, v.z),
-  pitch: Math.atan2(v.y, Math.hypot(v.x, v.z)),
-});
-
-// El acervo es jurisprudencia peruana, así que la vista abre sobre el Perú
-// en lugar de sobre un punto arbitrario del globo.
-const VISTA_PERU = camaraHacia(vectorDe(-9.2, -75));
-const ZOOM_INICIAL = 4.2;
 
 /** Rota un punto alrededor de Y (yaw) y luego de X (pitch). */
 const rotate = (v: Vec3, yaw: number, pitch: number): Vec3 => {
@@ -105,47 +91,13 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
         window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ).current;
 
-    // Cada resolución se ubica donde ocurrieron los hechos. Cuando varias
-    // comparten lugar (Lima concentra buena parte del acervo) se abren en
-    // abanico alrededor del punto real para que no se tapen entre sí; el
-    // lugar exacto siempre se lee en el panel.
+    // Posición fija de cada resolución sobre el globo.
     const posiciones = useMemo(() => {
-      const grupos = new Map<string, GraphNode[]>();
-      for (const n of data.nodes) {
-        const clave = `${n.lugar.lat.toFixed(2)},${n.lugar.lon.toFixed(2)}`;
-        const lista = grupos.get(clave);
-        if (lista) lista.push(n);
-        else grupos.set(clave, [n]);
-      }
+      const pts = fibonacciSphere(data.nodes.length);
       const mapa = new Map<string, Vec3>();
-      grupos.forEach((nodos) => {
-        nodos.forEach((n, i) => {
-          let { lat, lon } = n.lugar;
-          if (nodos.length > 1) {
-            const radio = 0.5 + nodos.length * 0.12;
-            const ang = (i / nodos.length) * TWO_PI;
-            lat += Math.sin(ang) * radio;
-            lon += (Math.cos(ang) * radio) / Math.cos(lat * GRADOS);
-          }
-          mapa.set(n.id, vectorDe(lat, lon));
-        });
-      });
+      data.nodes.forEach((n, i) => mapa.set(n.id, pts[i]));
       return mapa;
     }, [data.nodes]);
-
-    // Los contornos del mapa se convierten una sola vez; por frame solo se
-    // rotan y proyectan.
-    const mapaVectores = useMemo(
-      () =>
-        contornos.map((linea) => {
-          const pts: Vec3[] = [];
-          for (let i = 0; i < linea.length; i += 2) {
-            pts.push(vectorDe(linea[i + 1], linea[i]));
-          }
-          return pts;
-        }),
-      []
-    );
 
     const grados = useMemo(() => {
       const m = new Map<string, number>();
@@ -157,12 +109,9 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
     }, [data.links]);
 
     // Estado de cámara en refs: se anima por frame, fuera del ciclo de React.
-    const cam = useRef({ ...VISTA_PERU, zoom: ZOOM_INICIAL });
+    const cam = useRef({ yaw: 0.3, pitch: -0.25, zoom: 1 });
     const objetivo = useRef<null | { yaw: number; pitch: number; zoom: number }>(null);
     const autoRotar = useRef(!reduceMotion);
-    // Eje del vaivén. El balanceo se calcula como desvío absoluto respecto
-    // de este valor: sumarlo frame a frame hacía que la vista derivara.
-    const yawBase = useRef(VISTA_PERU.yaw);
     const arrastre = useRef<null | { x: number; y: number; movido: boolean }>(null);
     const proyectado = useRef(new Map<string, { sx: number; sy: number; z: number; r: number }>());
     const hoverRef = useRef<string | null>(null);
@@ -191,7 +140,7 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
     }, []);
 
     const resetView = useCallback(() => {
-      objetivo.current = { ...VISTA_PERU, zoom: ZOOM_INICIAL };
+      objetivo.current = { yaw: 0.3, pitch: -0.25, zoom: 1 };
       autoRotar.current = !reduceMotion;
     }, [reduceMotion]);
 
@@ -200,7 +149,11 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
         const v = posiciones.get(id);
         if (!v) return;
         // Rotación que deja ese punto mirando al frente.
-        objetivo.current = { ...camaraHacia(v), zoom: 4.5 };
+        objetivo.current = {
+          yaw: Math.atan2(-v.x, v.z),
+          pitch: Math.atan2(v.y, Math.hypot(v.x, v.z)),
+          zoom: 1.45,
+        };
         autoRotar.current = false;
       },
       resetView,
@@ -233,7 +186,6 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
           c.yaw += (o.yaw - c.yaw) * 0.08;
           c.pitch += (o.pitch - c.pitch) * 0.08;
           c.zoom += (o.zoom - c.zoom) * 0.08;
-          yawBase.current = c.yaw;
           if (
             Math.abs(o.yaw - c.yaw) < 0.002 &&
             Math.abs(o.pitch - c.pitch) < 0.002 &&
@@ -242,9 +194,7 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
             objetivo.current = null;
           }
         } else if (autoRotar.current && !arrastre.current) {
-          // Vaivén suave en torno al eje: una rotación completa dejaría al
-          // Perú fuera de vista la mitad del tiempo.
-          cam.current.yaw = yawBase.current + Math.sin(t * 0.22) * 0.016;
+          cam.current.yaw += 0.0016;
         }
 
         const { yaw, pitch, zoom } = cam.current;
@@ -287,7 +237,7 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
               primero = false;
             } else ctx.lineTo(sx, sy);
           }
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.035)";
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.055)";
           ctx.stroke();
         }
         // Meridianos
@@ -317,31 +267,9 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
               primero = false;
             } else ctx.lineTo(sx, sy);
           }
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.03)";
+          ctx.strokeStyle = "rgba(255, 255, 255, 0.045)";
           ctx.stroke();
         }
-        // Delimitación geográfica: trazo mínimo, solo para situar los casos.
-        ctx.beginPath();
-        for (const linea of mapaVectores) {
-          let primero = true;
-          for (const punto of linea) {
-            const v = rotate(punto, yaw, pitch);
-            if (v.z < 0) {
-              primero = true;
-              continue;
-            }
-            const sx = cx + v.x * R;
-            const sy = cy - v.y * R;
-            if (primero) {
-              ctx.moveTo(sx, sy);
-              primero = false;
-            } else ctx.lineTo(sx, sy);
-          }
-        }
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.11)";
-        ctx.lineWidth = 0.7;
-        ctx.stroke();
-
         // Anillo exterior con marcas
         ctx.beginPath();
         ctx.arc(cx, cy, R * 1.06, 0, TWO_PI);
@@ -472,7 +400,7 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
           // Etiquetas: solo en los nodos activos y en los más conectados
           // que estén de frente, para no saturar la vista.
           const esHub = (grados.get(n.id) ?? 0) >= 3;
-          if (esActivo || (esHub && zoom >= 6 && p.z > 0.45)) {
+          if (esActivo || (esHub && p.z > 0.45)) {
             ctx.font = "500 11px Inter, sans-serif";
             ctx.textAlign = "center";
             ctx.textBaseline = "top";
@@ -488,7 +416,7 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
 
       raf = requestAnimationFrame(dibujar);
       return () => cancelAnimationFrame(raf);
-    }, [data, dimensions, posiciones, mapaVectores, grados, reduceMotion]);
+    }, [data, dimensions, posiciones, grados, reduceMotion]);
 
     // ----------------------------- interacción -----------------------------
 
@@ -520,7 +448,6 @@ const GraphVisualizer = forwardRef<GraphVisualizerHandle, GraphVisualizerProps>(
         );
         arrastre.current.x = x;
         arrastre.current.y = y;
-        yawBase.current = cam.current.yaw;
         objetivo.current = null;
         return;
       }
